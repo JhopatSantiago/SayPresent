@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "371778351034",
+    "firebase_url": "https://saypresent-2459b.firebaseio.com",
+    "project_id": "saypresent-2459b",
+    "storage_bucket": "saypresent-2459b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371778351034:android:9ee41aed01bbba10367783",
+        "android_client_info": {
+          "package_name": "com.example.saypresent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "371778351034-frbadpu9cnk4m30eusm9q2v8fd4e2aio.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_qf9wexhhwP9716loPMyEwpm44kSm7Uw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "371778351034-frbadpu9cnk4m30eusm9q2v8fd4e2aio.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
