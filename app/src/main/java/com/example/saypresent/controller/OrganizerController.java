@@ -11,6 +11,7 @@ import com.example.saypresent.database.Database;
 import com.example.saypresent.datastore.DataStore;
 import com.example.saypresent.model.Organizer;
 import com.example.saypresent.utils.AuthInterface;
+import com.example.saypresent.utils.RegistrationInterface;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -24,7 +25,7 @@ public class OrganizerController {
     private Database database = new Database();
 
 //    CREATE ORGANIZER - REGISTER
-    public void CreateOrganizer(final Organizer organizer, final SignUp signUp){
+    public void CreateOrganizer(final Organizer organizer, final RegistrationInterface registrationInterface){
         final String organizer_key = database.organizerRef.push().getKey();
 
         Query checkOrganizer = database.organizerRef.orderByChild("email").equalTo(organizer.getEmail());
@@ -37,18 +38,18 @@ public class OrganizerController {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    signUp.clearFields();
-                                    signUp.showSuccess("Successfully Created a user");
+                                    registrationInterface.onCallback(true);
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
+                                    registrationInterface.onCallback(false);
                                     e.printStackTrace();
                                 }
                             });
                 }else{
-                    signUp.showFailure("Email already exists!");
+                    registrationInterface.onCallback(false);
                 }
             }
 

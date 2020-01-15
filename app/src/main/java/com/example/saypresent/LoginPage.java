@@ -39,10 +39,6 @@ public class LoginPage extends AppCompatActivity {
     public void SignIn(View v){
 
         organizerController = new OrganizerController();
-//        Organizer organizer = new Organizer("Chris John", "Bico", "Mulingbayan", "cj@test.com", "password");
-
-//        organizerController.CreateOrganizer(organizer, this);
-
         email_field = (EditText) findViewById(R.id.email);
         password_field = (EditText) findViewById(R.id.password);
         organizerController = new OrganizerController();

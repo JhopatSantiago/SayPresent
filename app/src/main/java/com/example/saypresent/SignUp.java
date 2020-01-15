@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,9 +12,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.saypresent.controller.OrganizerController;
 import com.example.saypresent.model.Organizer;
+import com.example.saypresent.utils.RegistrationInterface;
 
 public class SignUp extends AppCompatActivity {
 
@@ -23,40 +27,56 @@ public class SignUp extends AppCompatActivity {
     private EditText email_field;
     private EditText password_field;
     private EditText confirm_field;
+    private Button sign_up_button;
+    private boolean formOk;
+    private boolean isRegSuccess = false;
 
     private final String REQUIRED = "Required";
 
     private OrganizerController organizerController;
+    private RegistrationInterface registrationInterface;
+    private ProgressBar spinner;
 
     Button cancelbutton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-    }
 
-    public void onBackPressed(){
-     new AlertDialog.Builder(this)
-             .setIcon(android.R.drawable.ic_dialog_alert)
-             .setTitle("Going Away?")
-             .setMessage("Are you sure you want to cancel?")
-             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                 @Override
-                 public void onClick(DialogInterface dialog, int which) {
-                     finish();
-                 }
-             })
-             .setNegativeButton("No",null)
-             .show();
-    }
-
-    public void sign_up(View v){
         first_name_field = (EditText) findViewById(R.id.first_name);
         middle_name_field = (EditText) findViewById(R.id.middle_name);
         last_name_field = (EditText) findViewById(R.id.last_name);
         email_field = (EditText) findViewById(R.id.email_address);
         password_field = (EditText) findViewById(R.id.password);
         confirm_field = (EditText) findViewById(R.id.confirm);
+        spinner =  (ProgressBar) findViewById(R.id.progress_circular);
+        sign_up_button = (Button) findViewById(R.id.sign_up);
+
+        spinner.setVisibility(View.GONE);
+    }
+
+    public void onBackPressed() {
+        if (!isRegSuccess) {
+            new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Going Away?")
+                    .setMessage("Are you sure you want to cancel?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+        } else{
+            finish();
+        }
+    }
+
+
+    public void sign_up(View v){
+        formOk = true;
 
         String first_name = first_name_field.getText().toString();
         String middle_name = middle_name_field.getText().toString();
@@ -67,32 +87,32 @@ public class SignUp extends AppCompatActivity {
 
         if(TextUtils.isEmpty(first_name)){
             first_name_field.setError(REQUIRED);
-            return;
+            formOk = false;
         }
 
         if(TextUtils.isEmpty(middle_name)){
             middle_name_field.setError(REQUIRED);
-            return;
+            formOk = false;
         }
 
         if(TextUtils.isEmpty(last_name)){
             last_name_field.setError(REQUIRED);
-            return;
+            formOk = false;
         }
 
         if(TextUtils.isEmpty(email)){
             email_field.setError(REQUIRED);
-            return;
+            formOk = false;
         }
 
         if(TextUtils.isEmpty(password)){
             password_field.setError(REQUIRED);
-            return;
+            formOk = false;
         }
 
         if(TextUtils.isEmpty(confirm)){
             confirm_field.setError(REQUIRED);
-            return;
+            formOk = false;
         }
 
         if(!confirm.equals(password)){
@@ -102,10 +122,35 @@ public class SignUp extends AppCompatActivity {
             return;
         }
 
+        if (!formOk){
+            return;
+        }
+        sign_up_button.setEnabled(false);
+
         Organizer organizer = new Organizer(first_name, middle_name, last_name, email, password);
         organizerController = new OrganizerController();
+        registrationInterface = new RegistrationInterface() {
+            @Override
+            public void onCallback(Boolean success) {
+                if (success){
+                    clearFields();
+                    //remove loading spinner
+                    Log.i("spinnner", "hide");
+                    showSuccess("Successfully created a user!");
+                    isRegSuccess = true;
+                    sign_up_button.setEnabled(true);
+                }else{
+                    //remove loading spinner
+                    Log.i("spinnner", "hide");
+                    showFailure("Error in creating a user!");
+                    sign_up_button.setEnabled(true);
+                }
+            }
+        };
+        //show loading spinner
+        Log.i("spinner", "show");
 
-        organizerController.CreateOrganizer(organizer, this);
+        organizerController.CreateOrganizer(organizer, registrationInterface);
     }
 
     public void clearFields(){
@@ -119,10 +164,11 @@ public class SignUp extends AppCompatActivity {
 
     public void showSuccess(String message){
         Log.i("success", message); // Create Success dialog
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     public void showFailure(String message){
         Log.e("failed", message);
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-
 }

@@ -7,12 +7,20 @@
     tools:context=".SignUp"
     android:background="@drawable/background1">
 
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:indeterminate="false"
+        android:visibility="gone"
+        tools:ignore="MissingConstraints" />
+
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="415dp"
         android:layout_height="593dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,8 +87,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:background="@drawable/login_tab"
-            android:hint="Password"
             android:ems="10"
+            android:hint="Password"
             android:inputType="textPassword" />
 
         <EditText
@@ -90,8 +98,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:background="@drawable/login_tab"
-            android:hint="Confirm Password"
             android:ems="10"
+            android:hint="Confirm Password"
             android:inputType="textPassword" />
 
     </LinearLayout>
