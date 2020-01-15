@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.saypresent.datastore.DataStore;
+
 public class MainActivity extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 4000;
 
