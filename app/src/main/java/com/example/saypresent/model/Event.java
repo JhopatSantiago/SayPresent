@@ -4,11 +4,16 @@ public class Event {
     public String event_name;
     public String location;
     public String details;
+    public String event_key;
 
-    public Event(String event_name, String location, String details){
+    public Event(){
+
+    }
+    public Event(String event_name, String location, String details, String event_key){
         this.event_name = event_name;
         this.location = location;
         this.details = details;
+        this.event_key = event_key;
     }
 
     public String getEvent_name() {
@@ -21,5 +26,13 @@ public class Event {
 
     public String getDetails() {
         return details;
+    }
+
+    public String getEvent_key(){
+        return  event_key;
+    }
+
+    public void setEvent_key(String event_key){
+        this.event_key = event_key;
     }
 }
