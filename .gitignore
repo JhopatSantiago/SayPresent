@@ -12,3 +12,6 @@
 /captures
 .externalNativeBuild
 .cxx
+/app/src/main/java/com/example/saypresent/TestingActivity.java
+/app/src/main/res/layout/activity_testing.xml
+/app/google-services.json
