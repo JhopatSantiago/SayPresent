@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -119,7 +120,11 @@ public class SignUp extends AppCompatActivity {
         }
 
         if(!confirm.equals(password)){
-            confirm_field.setError("Oops! Your password does not match.");
+            AlertDialog.Builder Alert = new AlertDialog.Builder(SignUp.this);
+            Alert.setTitle("Oops!");
+            Alert.setMessage("Password does not match.");
+            Alert.setPositiveButton("OK",null);
+            Alert.show();
             password_field.setText("");
             confirm_field.setText("");
             return;
@@ -139,10 +144,40 @@ public class SignUp extends AppCompatActivity {
                     clearFields();
                     final LoadingDialog loadingDialog = new LoadingDialog(SignUp.this);
                     loadingDialog.startLoadingDialog();
-                    Log.i("spinnner", "hide");
-                    showSuccess("Congratulations! Account was created Successfully.");
-                    isRegSuccess = true;
-                    sign_up_button.setEnabled(true);
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadingDialog.dismissDialog();
+                            Log.i("spinnner", "hide");
+                            Handler Redirect = new Handler();
+                            Redirect.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AlertDialog.Builder Alert = new AlertDialog.Builder(SignUp.this);
+                                    Alert.setTitle("Success!");
+                                    Alert.setMessage("Your account was created.");
+                                    Alert.setPositiveButton(null,null);
+                                    Alert.show();
+                                }
+                            },3000);
+                            Handler toLogin = new Handler();
+                            toLogin.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Prevent the back button to go back again
+                                    Intent intent = new Intent (SignUp.this,LoginPage.class);
+                                    intent.putExtra("finish",true);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                }
+                            },6000);
+                            isRegSuccess = true;
+                            sign_up_button.setEnabled(true);
+                        }
+                    },3000);
+
+
                 }else{
                     final LoadingDialog loadingDialog = new LoadingDialog(SignUp.this);
                     loadingDialog.startLoadingDialog();
@@ -152,7 +187,11 @@ public class SignUp extends AppCompatActivity {
                         public void run() {
                             loadingDialog.dismissDialog();
                             Log.i("spinnner", "hide");
-
+                            AlertDialog.Builder Alert = new AlertDialog.Builder(SignUp.this);
+                            Alert.setTitle("Oops!");
+                            Alert.setMessage("Email address is already existed");
+                            Alert.setPositiveButton("OK",null);
+                            Alert.show();
                             sign_up_button.setEnabled(true);
                         }
                     },3000);
