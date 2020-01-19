@@ -98,6 +98,8 @@ public class LoginPage extends AppCompatActivity {
                    Log.i("organizer_key", organizer_key);
                    //declartion of loading
                    Intent intent = new Intent(LoginPage.this,Dashboard.class);
+                   intent.putExtra("finish",true);
+                   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                    startActivity(intent);
                }
            }
