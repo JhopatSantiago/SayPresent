@@ -58,7 +58,7 @@
             android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/Button"
+            android:id="@+id/button"
             android:layout_width="133dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
@@ -73,12 +73,12 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="429dp"
-        android:layout_height="230dp"
-        android:layout_marginTop="88dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
         app:srcCompat="@drawable/raise_hands" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

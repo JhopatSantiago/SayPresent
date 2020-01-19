@@ -1,19 +1,14 @@
 package com.example.saypresent;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.saypresent.controller.OrganizerController;
@@ -29,35 +24,18 @@ public class LoginPage extends AppCompatActivity {
     private EditText email_field;
     private EditText password_field;
 
-    private Button LoginButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
-        //background animation
+
         ConstraintLayout constraintLayout = findViewById(R.id.Layout);
         AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
-
-        /*LoginButton = findViewById(R.id.Button);*/
-        final LoadingDialog loadingDialog = new LoadingDialog(LoginPage.this);
-
-        /*LoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadingDialog.startLoadingDialog();
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadingDialog.dismissDialog();
-                    }
-                },5000);
-            }
-        });*/
     }
+
     public void SignIn(View v){
 
         organizerController = new OrganizerController();
@@ -94,11 +72,10 @@ public class LoginPage extends AppCompatActivity {
                if (organizer_key == null){
                    //DITO PRE YUNG PAG ERROR di ko alam pano ipapakita yung error message e.
                    Log.e("failed", "no user found!");
-               }else{
+               }else{ // There is a fetched user! hooray!
+                   // DITO PRE IKAW NA BAHALA KUNG SAN PUPUNTA
+                   //redirect to landing page
                    Log.i("organizer_key", organizer_key);
-                   //declartion of loading
-                   Intent intent = new Intent(LoginPage.this,Dashboard.class);
-                   startActivity(intent);
                }
            }
        };

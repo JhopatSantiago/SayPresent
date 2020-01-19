@@ -2,13 +2,11 @@ package com.example.saypresent;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDialogFragment;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -57,7 +55,6 @@ public class SignUp extends AppCompatActivity {
         spinner.setVisibility(View.GONE);
     }
 
-
     public void onBackPressed() {
         if (!isRegSuccess) {
             new AlertDialog.Builder(this)
@@ -89,37 +86,37 @@ public class SignUp extends AppCompatActivity {
         String confirm = confirm_field.getText().toString();
 
         if(TextUtils.isEmpty(first_name)){
-            first_name_field.setError("Your first Name is required.");
+            first_name_field.setError(REQUIRED);
             formOk = false;
         }
 
         if(TextUtils.isEmpty(middle_name)){
-            middle_name_field.setError("Your middle name is required.");
+            middle_name_field.setError(REQUIRED);
             formOk = false;
         }
 
         if(TextUtils.isEmpty(last_name)){
-            last_name_field.setError("Your last name is required.");
+            last_name_field.setError(REQUIRED);
             formOk = false;
         }
 
         if(TextUtils.isEmpty(email)){
-            email_field.setError("Your email address is required.");
+            email_field.setError(REQUIRED);
             formOk = false;
         }
 
         if(TextUtils.isEmpty(password)){
-            password_field.setError("Password is required.");
+            password_field.setError(REQUIRED);
             formOk = false;
         }
 
         if(TextUtils.isEmpty(confirm)){
-            confirm_field.setError("Field cannot be left blank");
+            confirm_field.setError(REQUIRED);
             formOk = false;
         }
 
         if(!confirm.equals(password)){
-            confirm_field.setError("Oops! Your password does not match.");
+            confirm_field.setError("Password does not match!");
             password_field.setText("");
             confirm_field.setText("");
             return;
@@ -137,28 +134,19 @@ public class SignUp extends AppCompatActivity {
             public void onCallback(Boolean success) {
                 if (success){
                     clearFields();
-                    final LoadingDialog loadingDialog = new LoadingDialog(SignUp.this);
-                    loadingDialog.startLoadingDialog();
+                    //remove loading spinner
                     Log.i("spinnner", "hide");
-                    showSuccess("Congratulations! Account was created Successfully.");
+                    showSuccess("Successfully created a user!");
                     isRegSuccess = true;
                     sign_up_button.setEnabled(true);
                 }else{
-                    final LoadingDialog loadingDialog = new LoadingDialog(SignUp.this);
-                    loadingDialog.startLoadingDialog();
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            loadingDialog.dismissDialog();
-                            Log.i("spinnner", "hide");
-
-                            sign_up_button.setEnabled(true);
-                        }
-                    },3000);
+                    //remove loading spinner
+                    Log.i("spinnner", "hide");
+                    showFailure("Error in creating a user!");
+                    sign_up_button.setEnabled(true);
                 }
             }
-        }   ;
+        };
         //show loading spinner
         Log.i("spinner", "show");
 
