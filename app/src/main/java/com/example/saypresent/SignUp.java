@@ -2,11 +2,14 @@ package com.example.saypresent;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialogFragment;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -55,6 +58,7 @@ public class SignUp extends AppCompatActivity {
         spinner.setVisibility(View.GONE);
     }
 
+
     public void onBackPressed() {
         if (!isRegSuccess) {
             new AlertDialog.Builder(this)
@@ -86,37 +90,41 @@ public class SignUp extends AppCompatActivity {
         String confirm = confirm_field.getText().toString();
 
         if(TextUtils.isEmpty(first_name)){
-            first_name_field.setError(REQUIRED);
+            first_name_field.setError("Your first Name is required.");
             formOk = false;
         }
 
         if(TextUtils.isEmpty(middle_name)){
-            middle_name_field.setError(REQUIRED);
+            middle_name_field.setError("Your middle name is required.");
             formOk = false;
         }
 
         if(TextUtils.isEmpty(last_name)){
-            last_name_field.setError(REQUIRED);
+            last_name_field.setError("Your last name is required.");
             formOk = false;
         }
 
         if(TextUtils.isEmpty(email)){
-            email_field.setError(REQUIRED);
+            email_field.setError("Your email address is required.");
             formOk = false;
         }
 
         if(TextUtils.isEmpty(password)){
-            password_field.setError(REQUIRED);
+            password_field.setError("Password is required.");
             formOk = false;
         }
 
         if(TextUtils.isEmpty(confirm)){
-            confirm_field.setError(REQUIRED);
+            confirm_field.setError("Field cannot be left blank");
             formOk = false;
         }
 
         if(!confirm.equals(password)){
-            confirm_field.setError("Password does not match!");
+            AlertDialog.Builder Alert = new AlertDialog.Builder(SignUp.this);
+            Alert.setTitle("Oops!");
+            Alert.setMessage("Password does not match.");
+            Alert.setPositiveButton("OK",null);
+            Alert.show();
             password_field.setText("");
             confirm_field.setText("");
             return;
@@ -134,19 +142,62 @@ public class SignUp extends AppCompatActivity {
             public void onCallback(Boolean success) {
                 if (success){
                     clearFields();
-                    //remove loading spinner
-                    Log.i("spinnner", "hide");
-                    showSuccess("Successfully created a user!");
-                    isRegSuccess = true;
-                    sign_up_button.setEnabled(true);
+                    final LoadingDialog loadingDialog = new LoadingDialog(SignUp.this);
+                    loadingDialog.startLoadingDialog();
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadingDialog.dismissDialog();
+                            Log.i("spinnner", "hide");
+                            Handler Redirect = new Handler();
+                            Redirect.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AlertDialog.Builder Alert = new AlertDialog.Builder(SignUp.this);
+                                    Alert.setTitle("Success!");
+                                    Alert.setMessage("Your account was created.");
+                                    Alert.setPositiveButton(null,null);
+                                    Alert.show();
+                                }
+                            },3000);
+                            Handler toLogin = new Handler();
+                            toLogin.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Prevent the back button to go back again
+                                    Intent intent = new Intent (SignUp.this,LoginPage.class);
+                                    intent.putExtra("finish",true);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                }
+                            },6000);
+                            isRegSuccess = true;
+                            sign_up_button.setEnabled(true);
+                        }
+                    },3000);
+
+
                 }else{
-                    //remove loading spinner
-                    Log.i("spinnner", "hide");
-                    showFailure("Error in creating a user!");
-                    sign_up_button.setEnabled(true);
+                    final LoadingDialog loadingDialog = new LoadingDialog(SignUp.this);
+                    loadingDialog.startLoadingDialog();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadingDialog.dismissDialog();
+                            Log.i("spinnner", "hide");
+                            AlertDialog.Builder Alert = new AlertDialog.Builder(SignUp.this);
+                            Alert.setTitle("Oops!");
+                            Alert.setMessage("Email address is already existed");
+                            Alert.setPositiveButton("OK",null);
+                            Alert.show();
+                            sign_up_button.setEnabled(true);
+                        }
+                    },3000);
                 }
             }
-        };
+        }   ;
         //show loading spinner
         Log.i("spinner", "show");
 
