@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.example.saypresent.controller.OrganizerController;
 import com.example.saypresent.model.Organizer;
 import com.example.saypresent.utils.GetOrganizerInterface;
+import android.view.View;
+import android.widget.Button;
 
 public class Dashboard extends AppCompatActivity {
     private String organizer_key;
@@ -20,20 +22,29 @@ public class Dashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        Button addEvent;
 
         Intent intent = getIntent();
         this.organizer_key = intent.getStringExtra("organizer_key");
         setOrganizer(organizer_key);
 
+        addEvent = findViewById(R.id.addEvent);
+        addEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent (Dashboard.this,addEvent.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setOrganizer(String organizer_key){
-//        dashboard_name = (TextView) findViewById(R.id.dashboardFN);
+        dashboard_name = (TextView) findViewById(R.id.dashboardFN);
         GetOrganizerInterface getOrganizerInterface = new GetOrganizerInterface() {
             @Override
             public void onGetOrganizer(Organizer organizer) {
                 organizerAttribute = organizer;
-//                dashboard_name.setText(organizer.getFirst_name());
+                dashboard_name.setText(organizer.getFirst_name());
             }
         };
         organizerController = new OrganizerController();

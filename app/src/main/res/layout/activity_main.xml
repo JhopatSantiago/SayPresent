@@ -5,5 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@drawable/intro_background"
-    />
+    android:background="@drawable/background_splash"
+    >
+
+    <ImageView
+        android:id="@+id/whiteLogo"
+        android:layout_width="158dp"
+        android:layout_height="216dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/say_present_logo_white" />
+</androidx.constraintlayout.widget.ConstraintLayout>
