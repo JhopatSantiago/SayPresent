@@ -46,7 +46,7 @@
             android:background="@drawable/login_tab"
             android:ems="10"
             android:hint="First Name"
-            android:inputType="textPersonName" />
+            android:inputType="textCapWords" />
 
         <EditText
             android:id="@+id/middle_name"
@@ -57,7 +57,7 @@
             android:background="@drawable/login_tab"
             android:ems="10"
             android:hint="Middle Name"
-            android:inputType="textPersonName" />
+            android:inputType="textCapWords" />
 
         <EditText
             android:id="@+id/last_name"
@@ -68,7 +68,7 @@
             android:background="@drawable/login_tab"
             android:ems="10"
             android:hint="Last Name"
-            android:inputType="textPersonName" />
+            android:inputType="textCapWords" />
 
         <EditText
             android:id="@+id/email_address"

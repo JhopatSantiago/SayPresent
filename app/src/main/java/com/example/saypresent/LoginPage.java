@@ -94,13 +94,38 @@ public class LoginPage extends AppCompatActivity {
                if (organizer_key == null){
                    //DITO PRE YUNG PAG ERROR di ko alam pano ipapakita yung error message e.
                    Log.e("failed", "no user found!");
+                   final LoadingDialog loadingDialog = new LoadingDialog(LoginPage.this);
+                   loadingDialog.startLoadingDialog();
+                   Handler handler = new Handler();
+                   handler.postDelayed(new Runnable() {
+                       @Override
+                       public void run() {
+                           loadingDialog.dismissDialog();
+                           Log.i("spinnner", "hide");
+                           AlertDialog.Builder Alert = new AlertDialog.Builder(LoginPage.this);
+                           Alert.setTitle("Oops!");
+                           Alert.setMessage("User does not exist.");
+                           Alert.setPositiveButton("OK",null);
+                           Alert.show();
+                       }
+                   },3000);
                }else{
                    Log.i("organizer_key", organizer_key);
                    //declartion of loading
-                   Intent intent = new Intent(LoginPage.this,Dashboard.class);
-                   intent.putExtra("finish",true);
-                   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                   startActivity(intent);
+                   final LoadingDialog loadingDialog = new LoadingDialog(LoginPage.this);
+                   loadingDialog.startLoadingDialog();
+                   Handler handler = new Handler();
+                   handler.postDelayed(new Runnable() {
+                       @Override
+                       public void run() {
+                           loadingDialog.dismissDialog();
+                           Intent intent = new Intent(LoginPage.this,Dashboard.class);
+                           intent.putExtra("finish",true);
+                           intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                           startActivity(intent);
+                       }
+                   },3000);
+
                }
            }
        };

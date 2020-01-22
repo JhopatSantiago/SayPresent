@@ -10,8 +10,8 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
-        android:layout_width="412dp"
-        android:layout_height="623dp"
+        android:layout_width="418dp"
+        android:layout_height="689dp"
         android:background="@drawable/background_dashboardmenu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +37,7 @@
                 android:ems="10"
                 android:fontFamily="@font/nexa_light"
                 android:hint="Event Name"
-                android:inputType="textPersonName"
+                android:inputType="textCapWords"
                 android:textSize="18dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -56,8 +56,9 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:fontFamily="@font/nexa_light"
+                android:textAllCaps="true"
                 android:hint="Location"
-                android:inputType="textPersonName"
+                android:inputType="textCapWords"
                 android:textSize="18dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,9 +103,27 @@
                 android:fontFamily="@font/nexa_light"
                 android:gravity="start|top"
                 android:hint="Description"
-                android:inputType="textMultiLine"
+                android:inputType="textCapSentences"
                 android:maxLength="50" />
+
         </com.google.android.material.textfield.TextInputLayout>
+
+<!--        <view-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="2dp"-->
+<!--            android:layout_marginTop="360dp"-->
+<!--            android:background="@android:color/darker_gray"/>-->
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="370dp"
+            android:fontFamily="@font/nexa_light"
+            android:text="Checkpoint"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="324dp"
@@ -112,7 +131,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="40dp"
-            android:layout_marginTop="95dp"
+            android:layout_marginTop="400dp"
             android:layout_marginRight="48dp">
 
             <EditText
@@ -121,33 +140,45 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:fontFamily="@font/nexa_light"
-                android:hint="Location"
-                android:inputType="textPersonName"
+                android:hint="Checkpoint Name"
+                android:inputType="textCapWords"
                 android:textSize="18dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <view
-            android:layout_width="350dp"
-            android:layout_height="2dp"
-            android:layout_marginTop="370dp"
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="319dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="40dp"
             android:layout_marginLeft="40dp"
-            android:background="@android:color/darker_gray">
-        </view>
+            android:layout_marginTop="515dp"
+            android:layout_marginEnd="53dp"
+            android:background="@drawable/button_addevent"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="SAVE"
+            android:textColor="#ffffff" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="455dp"
+            android:layout_marginRight="48dp">
 
-<!--        <Button-->
-<!--            android:id="@+id/button3"-->
-<!--            android:layout_width="319dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_marginStart="40dp"-->
-<!--            android:layout_marginLeft="40dp"-->
-<!--            android:layout_marginTop="420dp"-->
-<!--            android:layout_marginEnd="53dp"-->
-<!--            android:text="SAVE"-->
-<!--            android:background="@drawable/button_addevent"-->
-<!--            android:fontFamily="@font/montserrat_regular"-->
-<!--            android:textColor="#ffffff"/>-->
+            <EditText
+                android:id="@+id/checkpoint_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:fontFamily="@font/nexa_light"
+                android:hint="Checkpoint Location"
+                android:inputType="textCapWords"
+                android:textSize="18dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
 
     </RelativeLayout>
