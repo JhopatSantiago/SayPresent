@@ -1,0 +1,89 @@
+package com.example.saypresent.model;
+
+public class Attendee {
+    private String first_name;
+    private String middle_name;
+    private String last_name;
+    private String contact_number;
+    private String emergency_number;
+    private String email;
+    private String attendee_key;
+
+    public Attendee(String first_name, String middle_name, String last_name, String contact_number, String emergency_number, String email, String attendee_key){
+        this.first_name = first_name;
+        this.middle_name = middle_name;
+        this.last_name = last_name;
+        this.contact_number = contact_number;
+        this.emergency_number = emergency_number;
+        this.email = email;
+        this.attendee_key = attendee_key;
+    }
+    public Attendee(String first_name, String middle_name, String last_name, String contact_number, String emergency_number, String email){
+        this.first_name = first_name;
+        this.middle_name = middle_name;
+        this.last_name = last_name;
+        this.contact_number = contact_number;
+        this.emergency_number = emergency_number;
+        this.email = email;
+    }
+
+    public Attendee(){
+
+    }
+
+    public String getFirst_name() {
+        return first_name;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
+    public String getMiddle_name() {
+        return middle_name;
+    }
+
+    public void setMiddle_name(String middle_name) {
+        this.middle_name = middle_name;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
+    public String getContact_number() {
+        return contact_number;
+    }
+
+    public void setContact_number(String contact_number) {
+        this.contact_number = contact_number;
+    }
+
+    public String getEmergency_number() {
+        return emergency_number;
+    }
+
+    public void setEmergency_number(String emergency_number) {
+        this.emergency_number = emergency_number;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAttendee_key() {
+        return attendee_key;
+    }
+
+    public void setAttendee_key(String attendee_key) {
+        this.attendee_key = attendee_key;
+    }
+}
