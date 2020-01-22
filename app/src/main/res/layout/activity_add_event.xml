@@ -126,33 +126,28 @@
                 android:textSize="18dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="319dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="40dp"
+        <view
+            android:layout_width="350dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="370dp"
             android:layout_marginLeft="40dp"
-            android:layout_marginTop="360dp"
-            android:text="ADD CHECKPOINT"
-            android:textColor="#ffffff"
-            android:fontFamily="@font/montserrat_regular"
-            android:background="@drawable/button_addcheckpoint"/>
+            android:background="@android:color/darker_gray">
+        </view>
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="319dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="40dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="420dp"
-            android:layout_marginEnd="53dp"
-            android:text="SAVE"
-            android:background="@drawable/button_addevent"
-            android:fontFamily="@font/montserrat_regular"
-            android:textColor="#ffffff"/>
+<!--        <Button-->
+<!--            android:id="@+id/button3"-->
+<!--            android:layout_width="319dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentStart="true"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_marginStart="40dp"-->
+<!--            android:layout_marginLeft="40dp"-->
+<!--            android:layout_marginTop="420dp"-->
+<!--            android:layout_marginEnd="53dp"-->
+<!--            android:text="SAVE"-->
+<!--            android:background="@drawable/button_addevent"-->
+<!--            android:fontFamily="@font/montserrat_regular"-->
+<!--            android:textColor="#ffffff"/>-->
 
 
     </RelativeLayout>
