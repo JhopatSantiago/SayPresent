@@ -51,8 +51,6 @@ public class Dashboard extends AppCompatActivity {
             }
         });
         setName(this.organizer_key);
-
-
     }
 
     private void setName(final String organizer_key){
@@ -61,10 +59,10 @@ public class Dashboard extends AppCompatActivity {
         organizerReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    for (DataSnapshot organizerSnapshot : dataSnapshot.getChildren()){
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot organizerSnapshot : dataSnapshot.getChildren()) {
                         Organizer organizer = organizerSnapshot.getValue(Organizer.class);
-                        if(organizerSnapshot.getKey().equals(organizer_key)){
+                        if (organizerSnapshot.getKey().equals(organizer_key)) {
                             dashboard_name.setText(organizer.getFirst_name());
                         }
                     }
@@ -77,5 +75,5 @@ public class Dashboard extends AppCompatActivity {
             }
         });
     }
-
 }
+
