@@ -12,64 +12,50 @@
         android:layout_height="1122dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="228dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/BackgroundLoop"
-        app:layout_constraintTop_toTopOf="@+id/BackgroundLoop"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/say_present_logo_single" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="248dp"
-        android:layout_height="71dp"
-        app:layout_constraintBottom_toBottomOf="@+id/BackgroundLoop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.015"
-        app:srcCompat="@drawable/say_present_logo" />
 
     <Button
         android:id="@+id/Login"
         android:layout_width="271dp"
         android:layout_height="57dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/button"
         android:fontFamily="@font/nexa_bold"
         android:text="Login"
-        android:textColor="#c4a784"
+        android:textColor="#7bc6cc"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/signUp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6"
-        app:layout_constraintVertical_bias="0.415" />
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/signUp"
         android:layout_width="271dp"
         android:layout_height="57dp"
+        android:layout_marginBottom="228dp"
         android:background="@drawable/button_outline_signup"
         android:fontFamily="@font/nexa_bold"
         android:text="SIGN UP"
         android:textColor="#ffffff"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/BackgroundLoop"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="337dp"
+        android:layout_height="265dp"
+        app:layout_constraintBottom_toTopOf="@+id/Login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6"
-        app:layout_constraintVertical_bias="0.595" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.594"
+        app:srcCompat="@drawable/merge_saypresent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
