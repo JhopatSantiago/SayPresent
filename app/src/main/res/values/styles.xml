@@ -12,4 +12,10 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+        //Theme for splash screen
+    <style name="AppTheme.SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimarySplash</item>
+        <item name="colorPrimaryDark">@color/colorSecondarySplash</item>
+        <item name="colorAccent">@color/colorAccentSplash</item>
+    </style>
 </resources>

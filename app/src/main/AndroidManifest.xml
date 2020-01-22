@@ -9,16 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".addEvent"></activity>
         <!-- FOR TESTING -->
-        <activity android:name=".checkpoint_list"></activity>
+        <activity android:name=".checkpoint_list" />
         <activity android:name=".EventListActivity" />
-        <activity android:name=".TestingActivity" />
-        <!-- FOR TESTING -->
-        <activity android:name=".Dashboard"></activity>
+        <activity android:name=".TestingActivity" /> <!-- FOR TESTING -->
+        <activity android:name=".Dashboard" />
         <activity android:name=".SignUp" />
         <activity android:name=".LoginPage" />
         <activity android:name=".Login" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

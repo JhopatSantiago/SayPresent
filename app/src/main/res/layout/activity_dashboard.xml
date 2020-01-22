@@ -60,7 +60,7 @@
                 android:background="@drawable/event_icon" />
 
             <Button
-                android:id="@+id/button15"
+                android:id="@+id/addPeople"
                 android:layout_width="120dp"
                 android:layout_height="130dp"
                 android:layout_marginLeft="10dp"
@@ -75,7 +75,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/button18"
+                android:id="@+id/addEvent"
                 android:layout_width="120dp"
                 android:layout_height="130dp"
                 android:layout_marginLeft="10dp"
@@ -83,11 +83,12 @@
                 android:layout_marginTop="60dp" />
 
             <Button
+                android:id="@+id/exportAttendance"
                 android:layout_width="120dp"
                 android:layout_height="130dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/export"/>
+                android:background="@drawable/export" />
         </LinearLayout>
 
         <LinearLayout
@@ -96,7 +97,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/button20"
+                android:id="@+id/viewPeople"
                 android:layout_width="120dp"
                 android:layout_height="130dp"
                 android:layout_marginLeft="5dp"
@@ -104,7 +105,7 @@
                 android:background="@drawable/person_icon"/>
 
             <Button
-                android:id="@+id/button21"
+                android:id="@+id/logout"
                 android:layout_width="120dp"
                 android:layout_height="130dp"
                 android:layout_marginLeft="5dp"

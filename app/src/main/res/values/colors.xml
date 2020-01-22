@@ -5,4 +5,8 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="teal">#01a1b1</color>
+//color scheme for splash
+    <color name="colorPrimarySplash">#8082d7</color>
+    <color name="colorSecondarySplash">#89e3e4</color>
+    <color name="colorAccentSplash">#ffffff</color>
 </resources>
