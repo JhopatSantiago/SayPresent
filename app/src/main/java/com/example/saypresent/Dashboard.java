@@ -47,7 +47,7 @@ public class Dashboard extends AppCompatActivity {
                 dashboard_name.setText(organizer.getFirst_name());
             }
         };
-        organizerController = new OrganizerController();
-        organizerController.getOrganizer(organizer_key, getOrganizerInterface);
+//        organizerController = new OrganizerController();
+//        organizerController.getOrganizer(organizer_key, getOrganizerInterface);
     }
 }

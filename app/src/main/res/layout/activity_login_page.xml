@@ -10,8 +10,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="414dp"
-        android:layout_height="533dp"
+        android:layout_width="404dp"
+        android:layout_height="484dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
@@ -73,12 +73,14 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="429dp"
-        android:layout_height="230dp"
+        android:layout_width="445dp"
+        android:layout_height="216dp"
         android:layout_marginTop="88dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.058"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/raise_hands" />
 </androidx.constraintlayout.widget.ConstraintLayout>

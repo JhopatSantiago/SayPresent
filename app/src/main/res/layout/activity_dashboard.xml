@@ -24,15 +24,15 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="408dp"
-        android:layout_height="473dp"
+        android:layout_width="402dp"
+        android:layout_height="314dp"
         android:layout_marginTop="92dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.268"
         app:srcCompat="@drawable/raise_hands_2" />
 
     <LinearLayout

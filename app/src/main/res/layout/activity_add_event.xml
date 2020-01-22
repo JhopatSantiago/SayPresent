@@ -10,8 +10,8 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
-        android:layout_width="418dp"
-        android:layout_height="689dp"
+        android:layout_width="410dp"
+        android:layout_height="591dp"
         android:background="@drawable/background_dashboardmenu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,9 +56,9 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:fontFamily="@font/nexa_light"
-                android:textAllCaps="true"
                 android:hint="Location"
                 android:inputType="textCapWords"
+                android:textAllCaps="true"
                 android:textSize="18dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -108,11 +108,11 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-<!--        <view-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="2dp"-->
-<!--            android:layout_marginTop="360dp"-->
-<!--            android:background="@android:color/darker_gray"/>-->
+        <!--        <view-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="2dp"-->
+        <!--            android:layout_marginTop="360dp"-->
+        <!--            android:background="@android:color/darker_gray"/>-->
 
         <TextView
             android:id="@+id/textView6"
@@ -159,6 +159,7 @@
             android:fontFamily="@font/montserrat_regular"
             android:text="SAVE"
             android:textColor="#ffffff" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="324dp"
             android:layout_height="wrap_content"
@@ -178,7 +179,6 @@
                 android:inputType="textCapWords"
                 android:textSize="18dp" />
         </com.google.android.material.textfield.TextInputLayout>
-
 
 
     </RelativeLayout>
