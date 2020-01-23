@@ -17,17 +17,26 @@ public class Dashboard extends AppCompatActivity {
     private Organizer organizerAttribute;
     private OrganizerController organizerController;
     private TextView dashboard_name;
+    Button addEvent;
+    Button eventView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        Button addEvent;
 
         Intent intent = getIntent();
         this.organizer_key = intent.getStringExtra("organizer_key");
         setOrganizer(organizer_key);
 
+        eventView = findViewById(R.id.viewEvent);
+        eventView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Dashboard.this,Event.class);
+                startActivity(intent);
+            }
+        });
         addEvent = findViewById(R.id.addEvent);
         addEvent.setOnClickListener(new View.OnClickListener() {
             @Override

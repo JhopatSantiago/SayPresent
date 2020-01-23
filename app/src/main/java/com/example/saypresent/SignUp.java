@@ -42,6 +42,8 @@ public class SignUp extends AppCompatActivity {
     private RegistrationInterface registrationInterface;
     private ProgressBar spinner;
 
+    final LoadingDialog loadingDialog = new LoadingDialog(SignUp.this);
+
     Button cancelbutton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,10 +104,10 @@ public class SignUp extends AppCompatActivity {
             formOk = false;
         }
 
-        if(TextUtils.isEmpty(middle_name)){
-            middle_name_field.setError("Your middle name is required.");
-            formOk = false;
-        }
+//        if(TextUtils.isEmpty(middle_name)){
+//            middle_name_field.setError("Your middle name is required.");
+//            formOk = false;
+//        }
 
         if(TextUtils.isEmpty(last_name)){
             last_name_field.setError("Your last name is required.");
@@ -149,26 +151,25 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onCallback(Boolean success) {
                 if (success){
+//                    loadingDialog.dismissDialog();
                     clearFields();
-                    final LoadingDialog loadingDialog = new LoadingDialog(SignUp.this);
-                    loadingDialog.startLoadingDialog();
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            loadingDialog.dismissDialog();
                             Log.i("spinnner", "hide");
                             Handler Redirect = new Handler();
                             Redirect.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
+                                    loadingDialog.dismissDialog();
                                     AlertDialog.Builder Alert = new AlertDialog.Builder(SignUp.this);
                                     Alert.setTitle("Success!");
                                     Alert.setMessage("Your account was created.");
                                     Alert.setPositiveButton(null,null);
                                     Alert.show();
                                 }
-                            },3000);
+                            },1000);
                             Handler toLogin = new Handler();
                             toLogin.postDelayed(new Runnable() {
                                 @Override
@@ -179,7 +180,7 @@ public class SignUp extends AppCompatActivity {
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
                                 }
-                            },6000);
+                            },3000);
                             isRegSuccess = true;
                             sign_up_button.setEnabled(true);
                         }
@@ -188,7 +189,7 @@ public class SignUp extends AppCompatActivity {
 
                 }else{
                     final LoadingDialog loadingDialog = new LoadingDialog(SignUp.this);
-                    loadingDialog.startLoadingDialog();
+//                    loadingDialog.startLoadingDialog();
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -207,6 +208,7 @@ public class SignUp extends AppCompatActivity {
             }
         }   ;
         //show loading spinner
+        loadingDialog.startLoadingDialog();
         Log.i("spinner", "show");
 
         organizerController.CreateOrganizer(organizer, registrationInterface);
