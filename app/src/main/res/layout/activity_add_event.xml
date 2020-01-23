@@ -134,15 +134,15 @@
             android:layout_marginTop="400dp"
             android:layout_marginRight="48dp">
 
-            <EditText
-                android:id="@+id/checkpoint_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:fontFamily="@font/nexa_light"
-                android:hint="Checkpoint Name"
-                android:inputType="textCapWords"
-                android:textSize="18dp" />
+<!--            <EditText-->
+<!--                android:id="@+id/checkpoint_name"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:ems="10"-->
+<!--                android:fontFamily="@font/nexa_light"-->
+<!--                android:hint="Checkpoint Name"-->
+<!--                android:inputType="textCapWords"-->
+<!--                android:textSize="18dp" />-->
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
