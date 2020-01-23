@@ -90,7 +90,7 @@ public class LoginPage extends AppCompatActivity {
 
         authInterface = new AuthInterface() {
            @Override
-           public void onCallback(String organizer_key) {
+           public void onCallback(final String organizer_key) {
                if (organizer_key == null){
                    //DITO PRE YUNG PAG ERROR di ko alam pano ipapakita yung error message e.
                    Log.e("failed", "no user found!");
@@ -110,7 +110,6 @@ public class LoginPage extends AppCompatActivity {
                        }
                    },3000);
                }else{
-                   Log.i("organizer_key", organizer_key);
                    //declartion of loading
                    final LoadingDialog loadingDialog = new LoadingDialog(LoginPage.this);
                    loadingDialog.startLoadingDialog();
@@ -120,6 +119,7 @@ public class LoginPage extends AppCompatActivity {
                        public void run() {
                            loadingDialog.dismissDialog();
                            Intent intent = new Intent(LoginPage.this,Dashboard.class);
+                           intent.putExtra("organizer_key", organizer_key);
                            intent.putExtra("finish",true);
                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                            startActivity(intent);

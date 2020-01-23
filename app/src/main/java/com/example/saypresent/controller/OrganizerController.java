@@ -11,7 +11,9 @@ import com.example.saypresent.database.Database;
 import com.example.saypresent.datastore.DataStore;
 import com.example.saypresent.model.Organizer;
 import com.example.saypresent.utils.AuthInterface;
+import com.example.saypresent.utils.GetOrganizerInterface;
 import com.example.saypresent.utils.RegistrationInterface;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -83,6 +85,30 @@ public class OrganizerController {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("Error", databaseError.toString());
+            }
+        });
+    }
+
+    public void getOrganizer(final String organizer_key, final GetOrganizerInterface getOrganizerInterface){
+        Query organizerReference = database.organizerRef;
+
+        organizerReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for (DataSnapshot organizerSnapshot : dataSnapshot.getChildren()){
+                        Organizer organizer = organizerSnapshot.getValue(Organizer.class);
+                        if(organizerSnapshot.getKey().equals(organizer_key)){
+                            Log.i("organizer_key", organizerSnapshot.getKey());
+                            getOrganizerInterface.onCallback(organizer);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("error", databaseError.getMessage());
             }
         });
     }

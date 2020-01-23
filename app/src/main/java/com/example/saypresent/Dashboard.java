@@ -15,7 +15,6 @@ import com.example.saypresent.utils.GetOrganizerInterface;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import android.view.View;
@@ -46,7 +45,8 @@ public class Dashboard extends AppCompatActivity {
         eventView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Dashboard.this,Event.class);
+                Intent intent = new Intent(Dashboard.this, EventActivity.class);
+                intent.putExtra("organizer_key", organizer_key);
                 startActivity(intent);
             }
         });

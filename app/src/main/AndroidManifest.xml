@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Event"></activity>
+        <activity android:name=".EventActivity"></activity>
         <activity android:name=".addEvent" /> <!-- FOR TESTING -->
         <activity android:name=".checkpoint_list" />
         <activity android:name=".EventListActivity" />

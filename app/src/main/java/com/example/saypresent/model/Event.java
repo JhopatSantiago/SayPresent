@@ -5,6 +5,7 @@ public class Event {
     public String location;
     public String details;
     public String event_key;
+    public String event_date;
 
     public Event(){
 
@@ -14,6 +15,14 @@ public class Event {
         this.location = location;
         this.details = details;
         this.event_key = event_key;
+    }
+
+    public Event(String event_name, String location, String details, String event_date, String event_key){
+        this.event_name = event_name;
+        this.location = location;
+        this.details = details;
+        this.event_key = event_key;
+        this.event_date = event_date;
     }
 
     public String getEvent_name() {

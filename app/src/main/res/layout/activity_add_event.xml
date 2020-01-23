@@ -114,17 +114,6 @@
         <!--            android:layout_marginTop="360dp"-->
         <!--            android:background="@android:color/darker_gray"/>-->
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="370dp"
-            android:fontFamily="@font/nexa_light"
-            android:text="Checkpoint"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="324dp"
             android:layout_height="wrap_content"
@@ -146,7 +135,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/save_event"
             android:layout_width="319dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -157,6 +146,7 @@
             android:layout_marginEnd="53dp"
             android:background="@drawable/button_addevent"
             android:fontFamily="@font/montserrat_regular"
+            android:onClick="saveEvent"
             android:text="SAVE"
             android:textColor="#ffffff" />
 

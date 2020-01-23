@@ -6,6 +6,7 @@ public class Organizer {
     private String last_name;
     private String email;
     private String password;
+    private String organizer_key;
 
     public Organizer(){
 
@@ -17,6 +18,18 @@ public class Organizer {
         this.last_name = last_name;
         this.email = email;
         this.password = password;
+    }
+
+    public Organizer(String first_name, String middle_name, String last_name, String email, String password, String organizer_key){
+        this.first_name = first_name;
+        this.middle_name = middle_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.password = password;
+        this.organizer_key = organizer_key;
+    }
+    public void setOrganizer_key(String organizer_key){
+        this.organizer_key = organizer_key;
     }
 
     public String getFirst_name() {
