@@ -11,7 +11,11 @@ import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.saypresent.controller.AttendeeController;
+import com.example.saypresent.model.Attendee;
+import com.example.saypresent.utils.GetAttendeeInterface;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.common.BitMatrix;
@@ -24,6 +28,9 @@ public class DisplayQRActivity extends AppCompatActivity {
     private String attendee_key;
     private ImageView imageHolder;
     private Bitmap qrImage;
+    private TextView attendeeNameField;
+    private AttendeeController attendeeController = new AttendeeController();
+    private GetAttendeeInterface getAttendeeInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,17 +41,29 @@ public class DisplayQRActivity extends AppCompatActivity {
         /**
          * ACTUAL CODE
          */
-//        Intent intent = getIntent();
-//        this.attendee_key = intent.getStringExtra("attendee_key");
+        Intent intent = getIntent();
+        this.attendee_key = intent.getStringExtra("attendee_key");
 
         /**
          * DUMMY DATA - FOR SAMPLE
          */
-        this.attendee_key = "Hello world!";
-
         imageHolder = (ImageView) findViewById(R.id.qr_image);
+        attendeeNameField = (TextView) findViewById(R.id.attendeeName);
 
-//        Log.i("tag", "I'm here");
+        getAttendeeInterface = new GetAttendeeInterface() {
+            @Override
+            public void onGetAttendee(Attendee attendee) {
+                if(attendee != null){
+                    String name = attendee.getFirst_name() + " " +  attendee.getLast_name();
+                    attendeeNameField.setText(name);
+                }else{
+                    //Attendee not found!
+                }
+            }
+        };
+
+        attendeeController.getAttendee(attendee_key, getAttendeeInterface);
+
         generateQRCode();
     }
 
