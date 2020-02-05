@@ -31,25 +31,39 @@ public class OrganizerController {
         final String organizer_key = database.organizerRef.push().getKey();
 
         Query checkOrganizer = database.organizerRef.orderByChild("email").equalTo(organizer.getEmail());
+        final Query checkAttendee = database.attendeeRef.orderByChild("email").equalTo(organizer.getEmail());
 
         checkOrganizer.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.exists()){
-                    database.organizerRef.child(organizer_key).setValue(organizer)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    registrationInterface.onCallback(true);
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    registrationInterface.onCallback(false);
-                                    e.printStackTrace();
-                                }
-                            });
+                    checkAttendee.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(!dataSnapshot.exists()){
+                                database.organizerRef.child(organizer_key).setValue(organizer)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                registrationInterface.onCallback(true);
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        });
+                            }else{
+                                registrationInterface.onCallback(false);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Log.e("database error", databaseError.getMessage());
+                        }
+                    });
                 }else{
                     registrationInterface.onCallback(false);
                 }
@@ -57,7 +71,7 @@ public class OrganizerController {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w("database error", databaseError.getMessage());
+                Log.e("database error", databaseError.getMessage());
             }
         });
     }
