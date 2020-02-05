@@ -20,8 +20,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.saypresent.controller.AttendeeController;
 import com.example.saypresent.controller.OrganizerController;
+import com.example.saypresent.model.Attendee;
 import com.example.saypresent.model.Organizer;
+import com.example.saypresent.utils.AddAttendeeInterface;
 import com.example.saypresent.utils.RegistrationInterface;
 
 public class SignUp extends AppCompatActivity {
@@ -41,6 +44,8 @@ public class SignUp extends AppCompatActivity {
     private OrganizerController organizerController;
     private RegistrationInterface registrationInterface;
     private ProgressBar spinner;
+    private AttendeeController attendeeController;
+    private AddAttendeeInterface addAttendeeInterface;
 
     final LoadingDialog loadingDialog = new LoadingDialog(SignUp.this);
 
@@ -143,78 +148,40 @@ public class SignUp extends AppCompatActivity {
         if (!formOk){
             return;
         }
+
         sign_up_button.setEnabled(false);
-
-        Organizer organizer = new Organizer(first_name, middle_name, last_name, email, password);
-        organizerController = new OrganizerController();
-        registrationInterface = new RegistrationInterface() {
-            @Override
-            public void onCallback(Boolean success) {
-                if (success){
-//                    loadingDialog.dismissDialog();
-                    clearFields();
-                    final Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.i("spinnner", "hide");
-                            Handler Redirect = new Handler();
-                            Redirect.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    loadingDialog.dismissDialog();
-                                    AlertDialog.Builder Alert = new AlertDialog.Builder(SignUp.this);
-                                    Alert.setTitle("Success!");
-                                    Alert.setMessage("Your account was created.");
-                                    Alert.setPositiveButton(null,null);
-                                    Alert.show();
-                                }
-                            },1000);
-                            Handler toLogin = new Handler();
-                            toLogin.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    //Prevent the back button to go back again
-                                    Intent intent = new Intent (SignUp.this,LoginPage.class);
-                                    intent.putExtra("finish",true);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
-                                }
-                            },3000);
-                            isRegSuccess = true;
-                            sign_up_button.setEnabled(true);
-                        }
-                    },3000);
-
-
-                }else{
-                    final LoadingDialog loadingDialog = new LoadingDialog(SignUp.this);
-//                    loadingDialog.startLoadingDialog();
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            loadingDialog.dismissDialog();
-                            Log.i("spinnner", "hide");
-                            AlertDialog.Builder Alert = new AlertDialog.Builder(SignUp.this);
-                            Alert.setTitle("Oops!");
-                            Alert.setMessage("Email address is already existed");
-                            Alert.setPositiveButton("OK",null);
-                            Alert.show();
-                            sign_up_button.setEnabled(true);
-                        }
-                    },3000);
-                }
-            }
-        }   ;
-        //show loading spinner
         loadingDialog.startLoadingDialog();
-        Log.i("spinner", "show");
+        String user_type = "attendee";
 
-        organizerController.CreateOrganizer(organizer, registrationInterface);
+        if(user_type.equals("organizer")){
+            Organizer organizer = new Organizer(first_name, middle_name, last_name, email, password);
+            organizerController = new OrganizerController();
+            registrationInterface = new RegistrationInterface() {
+                @Override
+                public void onCallback(Boolean success) {
+                    showSuccess(success);
+                }
+            };
+            //show loading spinner
+            Log.i("spinner", "show");
+            organizerController.CreateOrganizer(organizer, registrationInterface);
+
+        }else if (user_type.equals("attendee")){
+            attendeeController = new AttendeeController();
+            addAttendeeInterface = new AddAttendeeInterface() {
+                @Override
+                public void onAddAttendee(boolean success) {
+                    showSuccess(success);
+                }
+            };
+            Attendee attendee = new Attendee(first_name, middle_name, last_name, email, password);
+            attendeeController.createAttendee(attendee, addAttendeeInterface);
+        }
     }
 
-    public void clearFields(){
+
+
+    private void clearFields(){
         this.first_name_field.setText("");
         this.middle_name_field.setText("");
         this.last_name_field.setText("");
@@ -223,9 +190,59 @@ public class SignUp extends AppCompatActivity {
         this.confirm_field.setText("");
     }
 
-    public void showSuccess(String message){
-        Log.i("success", message); // Create Success dialog
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public void showSuccess(boolean success){
+        if (success){
+            clearFields();
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Log.i("spinnner", "hide");
+                    Handler Redirect = new Handler();
+                    Redirect.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadingDialog.dismissDialog();
+                            AlertDialog.Builder Alert = new AlertDialog.Builder(SignUp.this);
+                            Alert.setTitle("Success!");
+                            Alert.setMessage("Your account was created.");
+                            Alert.setPositiveButton(null,null);
+                            Alert.show();
+                        }
+                    },1000);
+                    Handler toLogin = new Handler();
+                    toLogin.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Prevent the back button to go back again
+                            Intent intent = new Intent (SignUp.this,LoginPage.class);
+                            intent.putExtra("finish",true);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }
+                    },3000);
+                    isRegSuccess = true;
+                    sign_up_button.setEnabled(true);
+                }
+            },3000);
+        }else{
+//            final LoadingDialog loadingDialog = new LoadingDialog(SignUp.this);
+//                    loadingDialog.startLoadingDialog();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    loadingDialog.dismissDialog();
+                    Log.i("spinnner", "hide");
+                    AlertDialog.Builder Alert = new AlertDialog.Builder(SignUp.this);
+                    Alert.setTitle("Oops!");
+                    Alert.setMessage("Email address is already existed");
+                    Alert.setPositiveButton("OK",null);
+                    Alert.show();
+                    sign_up_button.setEnabled(true);
+                }
+            },3000);
+        }
     }
 
     public void showFailure(String message){

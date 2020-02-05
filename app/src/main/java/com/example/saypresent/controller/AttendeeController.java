@@ -1,5 +1,7 @@
 package com.example.saypresent.controller;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.saypresent.database.Database;
@@ -7,12 +9,14 @@ import com.example.saypresent.model.Attendee;
 import com.example.saypresent.model.Event;
 import com.example.saypresent.utils.AddAttendeeInterface;
 import com.example.saypresent.utils.GetAttendeeInterface;
+import com.example.saypresent.utils.GetRegisteredAttendeeInterface;
 import com.example.saypresent.utils.RemoveAttendeeInterface;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -23,10 +27,16 @@ public class AttendeeController {
     private final String ATTENDEE_NODE = "attendee";
     private final  String EVENT_NODE = "event";
 
-    public void addAttendee(String organizer_key, String event_key, Attendee attendee, final AddAttendeeInterface addAttendeeInterface){
-
+    /**
+     * This function will be used by the QR Code Scanner
+     * @param organizer_key
+     * @param event_key
+     * @param attendee
+     * @param addAttendeeInterface
+     */
+    public void addAttendeeOnEvent(String organizer_key, String event_key, Attendee attendee, final AddAttendeeInterface addAttendeeInterface){
         DatabaseReference attendeeRef = database.organizerRef.child(organizer_key).child(EVENT_NODE).child(event_key).child(ATTENDEE_NODE);
-        String attendee_key = attendeeRef.push().getKey();
+        String attendee_key = attendee.getAttendee_key();
         attendee.setAttendee_key(attendee_key);
         attendeeRef.child(attendee_key).setValue(attendee)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -41,6 +51,65 @@ public class AttendeeController {
                         addAttendeeInterface.onAddAttendee(false);
                     }
                 });
+    }
+
+
+    /**
+     * Adding attendee on a list of attendees
+     * @param attendee
+     * @param addAttendeeInterface
+     */
+    public void createAttendee(final Attendee attendee, final AddAttendeeInterface addAttendeeInterface){
+        final String attendee_key = database.attendeeRef.push().getKey();
+        attendee.setAttendee_key(attendee_key);
+        Query checkAttendee = database.attendeeRef.orderByChild("email").equalTo(attendee.getEmail());
+        final Query checkOrganizer = database.organizerRef.orderByChild("email").equalTo(attendee.getEmail());
+        final DatabaseReference attendeeRef = database.attendeeRef;
+
+        checkAttendee.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()) {
+                    checkOrganizer.addListenerForSingleValueEvent(new ValueEventListener() {
+                       @Override
+                       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                           if(!dataSnapshot.exists()){
+                               attendeeRef.child(attendee_key).setValue(attendee)
+                                       .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                           @Override
+                                           public void onSuccess(Void aVoid) {
+                                               addAttendeeInterface.onAddAttendee(true);
+                                           }
+                                       })
+                                       .addOnFailureListener(new OnFailureListener() {
+                                           @Override
+                                           public void onFailure(@NonNull Exception e) {
+                                               e.printStackTrace();
+                                               addAttendeeInterface.onAddAttendee(false);
+                                           }
+                                       });
+                           }else{
+                               // organizer with that email already exists
+                               addAttendeeInterface.onAddAttendee(false);
+                           }
+                       }
+
+                       @Override
+                       public void onCancelled(@NonNull DatabaseError databaseError) {
+                           Log.e("database error", databaseError.getMessage());
+                       }
+                   });
+                }else{
+                    // attendee with that email already exists.
+                    addAttendeeInterface.onAddAttendee(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("database error", databaseError.getMessage());
+            }
+        });
     }
 
     public void removeAttendee(String organizer_key, String event_key, String attendee_key, final RemoveAttendeeInterface removeAttendeeInterface){
@@ -61,6 +130,11 @@ public class AttendeeController {
                 });
     }
 
+   /**
+     * GET ALL ATTENDEES OF A SPECIFIC EVENT
+      * @param organizer_key
+     * @param event_key
+     */
     public void getAtteendees(String organizer_key, String event_key){
         DatabaseReference attendeeRef = database.organizerRef.child(organizer_key).child(EVENT_NODE).child(event_key).child(ATTENDEE_NODE);
         final List<Attendee> attendees = new ArrayList<>();
@@ -75,14 +149,21 @@ public class AttendeeController {
                     }
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("database error", databaseError.getMessage());
 
             }
         });
     }
 
+    /**
+     * GET A SPECIFIC ATTENDEE OF AN EVENT
+     * @param organizer_key
+     * @param event_key
+     * @param attendee_key
+     * @param getAttendeeInterface
+     */
     public void getAttendee(String organizer_key, String event_key,String attendee_key, final GetAttendeeInterface getAttendeeInterface){
         DatabaseReference attendeeRef = database.organizerRef.child(organizer_key).child(EVENT_NODE).child(event_key).child(ATTENDEE_NODE).child(attendee_key);
 
@@ -102,6 +183,57 @@ public class AttendeeController {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+    }
+
+    /**
+     * GET ALL REGISTERED ATTENDEES
+     * @param getRegisteredAttendeeInterface
+     */
+
+    public void getAllRegisteredAttendees(final GetRegisteredAttendeeInterface getRegisteredAttendeeInterface){
+        DatabaseReference registeredAttendeesRef = database.attendeeRef;
+
+        registeredAttendeesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Attendee> attendees = new ArrayList<>();
+                if (dataSnapshot.exists()){
+                    for (DataSnapshot attendeeSnapshot : dataSnapshot.getChildren()){
+                        Attendee attendee = attendeeSnapshot.getValue(Attendee.class);
+                        attendees.add(attendee);
+                    }
+                    getRegisteredAttendeeInterface.onGetRegisteredAttendees(attendees);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(" database error", databaseError.getMessage());
+            }
+        });
+    }
+
+    public void getAttendee(final String attendee_key, final GetAttendeeInterface getAttendeeInterface){
+        Query attendeeQuery = database.attendeeRef.orderByChild(attendee_key);
+
+        attendeeQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for (DataSnapshot attendeeSnapshot : dataSnapshot.getChildren()){
+                        Attendee attendee = attendeeSnapshot.getValue(Attendee.class);
+                        getAttendeeInterface.onGetAttendee(attendee);
+                    }
+                }else{
+                    getAttendeeInterface.onGetAttendee(null);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("database error", databaseError.getMessage());
             }
         });
     }

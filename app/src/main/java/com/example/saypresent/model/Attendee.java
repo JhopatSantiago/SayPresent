@@ -7,6 +7,7 @@ public class Attendee {
     private String contact_number;
     private String emergency_number;
     private String email;
+    private String password;
     private String attendee_key;
 
     public Attendee(String first_name, String middle_name, String last_name, String contact_number, String emergency_number, String email, String attendee_key){
@@ -25,6 +26,14 @@ public class Attendee {
         this.contact_number = contact_number;
         this.emergency_number = emergency_number;
         this.email = email;
+    }
+
+    public Attendee(String first_name, String middle_name, String last_name, String email, String password){
+        this.first_name = first_name;
+        this.middle_name = middle_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.password = password;
     }
 
     public Attendee(){
@@ -85,5 +94,13 @@ public class Attendee {
 
     public void setAttendee_key(String attendee_key) {
         this.attendee_key = attendee_key;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
