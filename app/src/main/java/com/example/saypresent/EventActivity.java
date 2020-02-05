@@ -11,7 +11,7 @@ import android.view.View;
 import com.example.saypresent.adapter.EventsAdapter;
 import com.example.saypresent.controller.EventController;
 import com.example.saypresent.model.Event;
-import com.example.saypresent.utils.CustomEventClickListener;
+//import com.example.saypresent.utils.CustomEventClickListener;
 import com.example.saypresent.utils.GetEventsInterface;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class EventActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private List<EventActivity> events;
+    private List<Event> events;
     private GetEventsInterface getEventsInterface;
     private EventController eventController;
     private String organizer_key;

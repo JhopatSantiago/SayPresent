@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.saypresent.EventActivity;
 import com.example.saypresent.R;
 import com.example.saypresent.model.Event;
-import com.example.saypresent.utils.CustomEventClickListener;
+//import com.example.saypresent.utils.CustomEventClickListener;
 
 import java.util.List;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
     private List<Event> events;
-    private CustomEventClickListener listener;
+//    private CustomEventClickListener listener;
+
 
 
     public EventsAdapter(List<Event> events) {
