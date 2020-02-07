@@ -6,12 +6,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.saypresent.adapter.EventsAdapter;
 import com.example.saypresent.controller.EventController;
 import com.example.saypresent.model.Event;
 //import com.example.saypresent.utils.CustomEventClickListener;
+import com.example.saypresent.utils.CustomEventClickListener;
 import com.example.saypresent.utils.GetEventsInterface;
 
 import java.util.List;
@@ -51,7 +53,19 @@ public class EventActivity extends AppCompatActivity {
         eventController.getEvents(organizer_key, getEventsInterface);
     }
     public void instantiateAdapter(final List<Event> events){
-        mAdapter = new EventsAdapter(events);
+        CustomEventClickListener clickListener = new CustomEventClickListener() {
+            @Override
+            public void onItemClick(View v, int i) {
+                String event_key = events.get(i).getEvent_key();
+                Intent intent = new Intent(getApplicationContext(), EventDetailActivity.class);
+                intent.putExtra("organizer_key", organizer_key);
+                intent.putExtra("event_key", event_key);
+
+                startActivity(intent);
+            }
+        };
+
+        mAdapter = new EventsAdapter(events, clickListener);
         recyclerView.setAdapter(mAdapter);
     }
 }

@@ -11,18 +11,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.saypresent.EventActivity;
 import com.example.saypresent.R;
 import com.example.saypresent.model.Event;
-//import com.example.saypresent.utils.CustomEventClickListener;
+import com.example.saypresent.utils.CustomEventClickListener;
 
 import java.util.List;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
     private List<Event> events;
-//    private CustomEventClickListener listener;
+    private CustomEventClickListener listener;
 
 
 
-    public EventsAdapter(List<Event> events) {
+    public EventsAdapter(List<Event> events, CustomEventClickListener listener) {
         this.events = events;
+        this.listener = listener;
     }
 
 
@@ -32,12 +33,12 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.events_list, parent, false);
         final ViewHolder vh = new ViewHolder(view);
-//        view.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                listener.onItemClick(v, vh.getPosition());
-//            }
-//        });
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(v, vh.getPosition());
+            }
+        });
 
         return vh;
     }
