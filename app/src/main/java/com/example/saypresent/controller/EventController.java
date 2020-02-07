@@ -10,6 +10,7 @@ import com.example.saypresent.database.Database;
 import com.example.saypresent.model.Event;
 import com.example.saypresent.utils.CreateEventInterface;
 import com.example.saypresent.utils.DeleteEventInterface;
+import com.example.saypresent.utils.GetEventHandler;
 import com.example.saypresent.utils.GetEventsInterface;
 import com.example.saypresent.utils.UpdateEventInterface;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -71,6 +72,24 @@ public class EventController {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("database error", databaseError.getMessage());
+            }
+        });
+    }
+
+    public void getEvent(String organizer_key, String event_key, final GetEventHandler getEventHandler){
+        DatabaseReference eventRef = database.organizerRef.child(organizer_key).child(EVENT_NODE).child(event_key);
+        eventRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    Event event = dataSnapshot.getValue(Event.class);
+                    getEventHandler.onGetEvent(event);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("error im get event", databaseError.getMessage());
             }
         });
     }
