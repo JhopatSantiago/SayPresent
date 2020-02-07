@@ -216,16 +216,14 @@ public class AttendeeController {
     }
 
     public void getAttendee(final String attendee_key, final GetAttendeeInterface getAttendeeInterface){
-        Query attendeeQuery = database.attendeeRef.orderByChild(attendee_key);
+        DatabaseReference attendeeQuery = database.attendeeRef.child(attendee_key);
 
         attendeeQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    for (DataSnapshot attendeeSnapshot : dataSnapshot.getChildren()){
-                        Attendee attendee = attendeeSnapshot.getValue(Attendee.class);
-                        getAttendeeInterface.onGetAttendee(attendee);
-                    }
+                    Attendee attendee = dataSnapshot.getValue(Attendee.class);
+                    getAttendeeInterface.onGetAttendee(attendee);
                 }else{
                     getAttendeeInterface.onGetAttendee(null);
                 }
