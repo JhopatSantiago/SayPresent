@@ -104,19 +104,14 @@ public class OrganizerController {
     }
 
     public void getOrganizer(final String organizer_key, final GetOrganizerInterface getOrganizerInterface){
-        Query organizerReference = database.organizerRef;
+        Query organizerReference = database.organizerRef.child(organizer_key);
 
         organizerReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    for (DataSnapshot organizerSnapshot : dataSnapshot.getChildren()){
-                        Organizer organizer = organizerSnapshot.getValue(Organizer.class);
-                        if(organizerSnapshot.getKey().equals(organizer_key)){
-                            Log.i("organizer_key", organizerSnapshot.getKey());
-                            getOrganizerInterface.onCallback(organizer);
-                        }
-                    }
+                    Organizer organizer = dataSnapshot.getValue(Organizer.class);
+                    getOrganizerInterface.onCallback(organizer);
                 }
             }
 

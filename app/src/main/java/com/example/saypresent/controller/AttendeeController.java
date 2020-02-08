@@ -171,10 +171,8 @@ public class AttendeeController {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
-                    for (DataSnapshot ds : dataSnapshot.getChildren()){
-                        Attendee attendee = ds.getValue(Attendee.class);
-                        getAttendeeInterface.onGetAttendee(attendee);
-                    }
+                    Attendee attendee = dataSnapshot.getValue(Attendee.class);
+                    getAttendeeInterface.onGetAttendee(attendee);
                 }else{
                     getAttendeeInterface.onGetAttendee(null);
                 }

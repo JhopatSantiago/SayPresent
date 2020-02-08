@@ -34,7 +34,7 @@ public class EventDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         organizer_key  = intent.getStringExtra("organizer_key");
         event_key = intent.getStringExtra("event_key");
-
+        initialize();
         event_name = (TextView) findViewById(R.id.event_name);
         event_location = (TextView) findViewById(R.id.event_location);
         qr_button = (Button) findViewById(R.id.btn_qrcode);
@@ -49,8 +49,6 @@ public class EventDetailActivity extends AppCompatActivity {
                 startActivity(scannerIntent);
             }
         });
-
-        initialize();
     }
 
     private void initialize(){

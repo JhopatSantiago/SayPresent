@@ -1,5 +1,9 @@
 package com.example.saypresent.adapter;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +16,23 @@ import com.example.saypresent.EventActivity;
 import com.example.saypresent.R;
 import com.example.saypresent.model.Event;
 import com.example.saypresent.utils.CustomEventClickListener;
+import com.example.saypresent.utils.LongClickListener;
 
 import java.util.List;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
     private List<Event> events;
     private CustomEventClickListener listener;
+    private Context context;
+    private LongClickListener longClickListener;
 
 
 
-    public EventsAdapter(List<Event> events, CustomEventClickListener listener) {
+    public EventsAdapter(List<Event> events, CustomEventClickListener listener, LongClickListener longClickListener, Context context) {
         this.events = events;
         this.listener = listener;
+        this.context = context;
+        this.longClickListener = longClickListener;
     }
 
 
@@ -40,8 +49,28 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             }
         });
 
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                final String[] items = {"Delete", "Update"};
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Select action");
+                builder.setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String action = items[i];
+                        longClickListener.onLongClick(vh.getPosition(), action);
+                    }
+                });
+                builder.show();
+                return true;
+            }
+        });
+
         return vh;
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {

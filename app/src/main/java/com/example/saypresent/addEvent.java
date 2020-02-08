@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.saypresent.controller.EventController;
 import com.example.saypresent.model.Event;
@@ -81,27 +82,12 @@ public class addEvent extends AppCompatActivity {
             @Override
             public void onCreateEvent(boolean success) {
                 if(success){
-                    final Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Handler Redirect = new Handler();
-                            Redirect.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    clearFields();
-                                    loadingDialog.dismissDialog();
-                                    AlertDialog.Builder Alert = new AlertDialog.Builder(addEvent.this);
-                                    Alert.setTitle("Success!");
-                                    Alert.setMessage("EventActivity Created.");
-                                    Alert.setPositiveButton(null,null);
-                                    Alert.show();
-                                    finish();
-                                }
-                            },1000);
-                        }
-                    },3000);
+                    loadingDialog.dismissDialog();
+                    Log.i("success", "Successfully created application");
+                    showMessage("Successfully created application");
+                    clearFields();
                 }else{
+                    showMessage("Failure in creating application");
                 }
             }
         };
@@ -111,7 +97,11 @@ public class addEvent extends AppCompatActivity {
         eventController.CreateEvent(organizer_key, event, createEventInterface);
     }
 
-    public void clearFields(){
+    private void showMessage(String message){
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void clearFields(){
         event_name_field.setText("");
         event_location_field.setText("");
         event_date_field.setText("");

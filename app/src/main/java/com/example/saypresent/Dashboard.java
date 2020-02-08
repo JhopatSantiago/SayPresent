@@ -23,7 +23,7 @@ import android.widget.Button;
 public class Dashboard extends AppCompatActivity {
     private String organizer_key;
     private Organizer organizerAttribute;
-    private OrganizerController organizerController;
+    private OrganizerController organizerController = new OrganizerController();
     private TextView dashboard_name;
     Button addEvent;
     Button eventView;
@@ -63,24 +63,13 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void setName(final String organizer_key){
-
-        DatabaseReference organizerReference = database.organizerRef;
-        organizerReference.addValueEventListener(new ValueEventListener() {
+        organizerController.getOrganizer(organizer_key, new GetOrganizerInterface() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot organizerSnapshot : dataSnapshot.getChildren()) {
-                        Organizer organizer = organizerSnapshot.getValue(Organizer.class);
-                        if (organizerSnapshot.getKey().equals(organizer_key)) {
-                            dashboard_name.setText(organizer.getFirst_name());
-                        }
-                    }
+            public void onCallback(Organizer organizer) {
+                if(organizer != null){
+                    String name = organizer.getFirst_name() + " " + organizer.getLast_name();
+                    dashboard_name.setText(name);
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("error", databaseError.getMessage());
             }
         });
     }

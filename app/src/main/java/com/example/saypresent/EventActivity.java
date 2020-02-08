@@ -15,6 +15,7 @@ import com.example.saypresent.model.Event;
 //import com.example.saypresent.utils.CustomEventClickListener;
 import com.example.saypresent.utils.CustomEventClickListener;
 import com.example.saypresent.utils.GetEventsInterface;
+import com.example.saypresent.utils.LongClickListener;
 
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class EventActivity extends AppCompatActivity {
         organizer_key = intent.getStringExtra("organizer_key");
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+//        recyclerView.setNestedScrollingEnabled(true);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -65,7 +67,19 @@ public class EventActivity extends AppCompatActivity {
             }
         };
 
-        mAdapter = new EventsAdapter(events, clickListener);
+        LongClickListener longClickListener = new LongClickListener() {
+            @Override
+            public void onLongClick(int i, String action) {
+                Log.i("event_name", events.get(i).getEvent_name());
+                Log.i("action", action);
+            }
+        };
+
+        mAdapter = new EventsAdapter(events, clickListener, longClickListener,EventActivity.this);
         recyclerView.setAdapter(mAdapter);
+    }
+
+    private void test(){
+        System.out.println("GG");
     }
 }
