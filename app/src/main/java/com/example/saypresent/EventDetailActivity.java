@@ -38,6 +38,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private TextView event_name;
     private TextView event_location;
     private Button qr_button;
+    private Button eventAttendeeBtn;
 
     private EventController eventController = new EventController();
     private GetEventHandler getEventHandler;
@@ -54,13 +55,14 @@ public class EventDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         organizer_key  = intent.getStringExtra("organizer_key");
         event_key = intent.getStringExtra("event_key");
         initialize();
         event_name = (TextView) findViewById(R.id.event_name);
         event_location = (TextView) findViewById(R.id.event_location);
         qr_button = (Button) findViewById(R.id.btn_qrcode);
+        eventAttendeeBtn = (Button) findViewById(R.id.eventAttendeeBtn);
 
         //this button will trigger qr_code scanner of an event
         qr_button.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +74,17 @@ public class EventDetailActivity extends AppCompatActivity {
                 startActivity(scannerIntent);
             }
         });
+
+        //this button will trigger event attendee(EventAttendeeActivity.java) list activity
+        eventAttendeeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent eventAttendeeIntent = new Intent(getApplicationContext(), EventAttendeeActivity.class);
+                eventAttendeeIntent.putExtra("event_key", event_key);
+                startActivity(eventAttendeeIntent);
+            }
+        });
+
 
         recyclerView = (RecyclerView) findViewById(R.id.checkpointRecycler);
         recyclerView.setHasFixedSize(true);

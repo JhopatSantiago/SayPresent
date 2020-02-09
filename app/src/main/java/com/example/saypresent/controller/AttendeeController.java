@@ -138,7 +138,7 @@ public class AttendeeController {
      * GET ALL ATTENDEES OF A SPECIFIC EVENT
      * @param event_key
      */
-    public void getAtteendees(String event_key, final GetEventAttendeeInterface getEventAttendeeInterface){
+    public void getEventAtteendees(String event_key, final GetEventAttendeeInterface getEventAttendeeInterface){
         Query attendeeRef = database.event_attendeeRef.orderByChild("event_key").equalTo(event_key);
 //        DatabaseReference attendeeRef = database.event_attendeeRef;
         final List<Attendee> attendees = new ArrayList<>();
@@ -158,6 +158,7 @@ public class AttendeeController {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("error", "error in attendeeController.getEventAttendees");
                 Log.e("database error", databaseError.getMessage());
             }
         });
@@ -191,6 +192,11 @@ public class AttendeeController {
         });
     }
 
+    /**
+     * Get Attendee
+     * @param attendee_key
+     * @param getAttendeeInterface
+     */
     public void getAttendee(final String attendee_key, final GetAttendeeInterface getAttendeeInterface){
         DatabaseReference attendeeQuery = database.attendeeRef.child(attendee_key);
 
