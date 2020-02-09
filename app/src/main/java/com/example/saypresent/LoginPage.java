@@ -23,6 +23,9 @@ import com.example.saypresent.model.Organizer;
 import com.example.saypresent.utils.AuthInterface;
 import com.example.saypresent.utils.LoginInterface;
 
+/**
+ * Input EMAIL and PASSWORD
+ */
 public class LoginPage extends AppCompatActivity {
     private DataStore dataStore = new DataStore();
     private OrganizerController organizerController;

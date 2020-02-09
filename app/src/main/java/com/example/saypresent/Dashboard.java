@@ -20,6 +20,9 @@ import com.google.firebase.database.ValueEventListener;
 import android.view.View;
 import android.widget.Button;
 
+/**
+ * Dashboard Activity
+ */
 public class Dashboard extends AppCompatActivity {
     private String organizer_key;
     private Organizer organizerAttribute;

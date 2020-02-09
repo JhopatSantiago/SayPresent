@@ -25,6 +25,11 @@ import com.example.saypresent.utils.GetEventHandler;
 
 import java.util.List;
 
+/**
+ * Displays Details of an Event
+ * trigger for QR Scanner to ADD an ATTENDEE
+ * trigger for Event's Registered ATTENDEES
+ */
 public class EventDetailActivity extends AppCompatActivity {
 
     private String organizer_key;

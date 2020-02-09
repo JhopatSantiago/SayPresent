@@ -24,6 +24,9 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import java.util.EnumMap;
 import java.util.Map;
 
+/**
+ * Displays Attendee QR code
+ */
 public class DisplayQRActivity extends AppCompatActivity {
     private String attendee_key;
     private ImageView imageHolder;

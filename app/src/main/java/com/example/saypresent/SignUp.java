@@ -27,6 +27,9 @@ import com.example.saypresent.model.Organizer;
 import com.example.saypresent.utils.AddAttendeeInterface;
 import com.example.saypresent.utils.RegistrationInterface;
 
+/**
+ * Activity for Sign Up
+ */
 public class SignUp extends AppCompatActivity {
 
     private EditText first_name_field;

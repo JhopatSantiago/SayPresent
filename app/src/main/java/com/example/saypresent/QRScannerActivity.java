@@ -28,6 +28,10 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 
+/**
+ * Scan QR code to add ATTENDEE TO LIST OF EVENT ATTENDEES
+ * ATTENDEE -> EVENT
+ */
 public class QRScannerActivity extends AppCompatActivity {
 
     private SurfaceView surfaceView;

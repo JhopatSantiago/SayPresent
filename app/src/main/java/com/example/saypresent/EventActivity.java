@@ -19,6 +19,9 @@ import com.example.saypresent.utils.LongClickListener;
 
 import java.util.List;
 
+/**
+ * Displays all events created by the organizer
+ */
 public class EventActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -77,9 +80,5 @@ public class EventActivity extends AppCompatActivity {
 
         mAdapter = new EventsAdapter(events, clickListener, longClickListener,EventActivity.this);
         recyclerView.setAdapter(mAdapter);
-    }
-
-    private void test(){
-        System.out.println("GG");
     }
 }

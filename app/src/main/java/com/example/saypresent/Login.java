@@ -17,6 +17,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+/**
+ * First Activity after Splash Screen
+ * Choose if sign in/sign up
+ */
 public class Login extends AppCompatActivity {
     MediaPlayer mMediaPlayer;
     int mCurrentViewPosition;

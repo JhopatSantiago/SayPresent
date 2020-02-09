@@ -22,6 +22,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ * Creating Events
+ */
 public class addEvent extends AppCompatActivity {
     private String organizer_key;
     private EditText event_name_field;

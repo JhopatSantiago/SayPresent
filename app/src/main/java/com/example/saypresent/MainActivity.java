@@ -13,6 +13,9 @@ import android.widget.ImageView;
 
 import com.example.saypresent.datastore.DataStore;
 
+/**
+ * Splash Screen
+ */
 public class MainActivity extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 4000;
 
