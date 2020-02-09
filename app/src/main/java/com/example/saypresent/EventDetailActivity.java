@@ -1,18 +1,29 @@
 package com.example.saypresent;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EdgeEffect;
 import android.widget.TextView;
 
+import com.example.saypresent.adapter.CheckpointsAdapter;
+import com.example.saypresent.controller.EventCheckpointController;
 import com.example.saypresent.controller.EventController;
 import com.example.saypresent.model.Event;
+import com.example.saypresent.model.EventCheckpoint;
+import com.example.saypresent.utils.CustomEventClickListener;
+import com.example.saypresent.utils.GetEventCheckpoints;
 import com.example.saypresent.utils.GetEventHandler;
+
+import java.util.List;
 
 public class EventDetailActivity extends AppCompatActivity {
 
@@ -25,6 +36,13 @@ public class EventDetailActivity extends AppCompatActivity {
 
     private EventController eventController = new EventController();
     private GetEventHandler getEventHandler;
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+    private List<EventCheckpoint> eventCheckpoints;
+    private EventCheckpointController eventCheckpointController = new EventCheckpointController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +67,24 @@ public class EventDetailActivity extends AppCompatActivity {
                 startActivity(scannerIntent);
             }
         });
+
+        recyclerView = (RecyclerView) findViewById(R.id.checkpointRecycler);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+
+        eventCheckpointController.getEventCheckpoints(event_key, new GetEventCheckpoints() {
+            @Override
+            public void onGetCheckpoint(List<EventCheckpoint> eventCheckpoints) {
+                if(eventCheckpoints != null){
+                    instantiateAdapter(eventCheckpoints);
+                }else{
+                    recyclerView.setVisibility(View.GONE);
+                }
+            }
+        });
+
     }
 
     private void initialize(){
@@ -63,5 +99,22 @@ public class EventDetailActivity extends AppCompatActivity {
             }
         };
         eventController.getEvent(organizer_key, event_key, getEventHandler);
+    }
+
+    private void instantiateAdapter(final List<EventCheckpoint> eventCheckpoints){
+        CustomEventClickListener customEventClickListener = new CustomEventClickListener() {
+            @Override
+            public void onItemClick(View v, int i) {
+                EventCheckpoint eventCheckpoint = eventCheckpoints.get(i);
+                String checkpoint_key = eventCheckpoint.getCheckpoint_key();
+
+                Intent intent = new Intent(getApplicationContext(), CheckpointActivity.class);
+                intent.putExtra("checkpoint_key", checkpoint_key);
+                startActivity(intent);
+            }
+        };
+
+        mAdapter = new CheckpointsAdapter(eventCheckpoints, customEventClickListener);
+        recyclerView.setAdapter(mAdapter);
     }
 }

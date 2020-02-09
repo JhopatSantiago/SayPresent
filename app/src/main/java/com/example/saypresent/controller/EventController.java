@@ -31,10 +31,10 @@ public class EventController {
 
     //POST event
     public void CreateEvent(String organizer_key, Event event, final CreateEventInterface createEventInterface){
-        DatabaseReference eventRef = database.organizerRef.child(organizer_key).child(EVENT_NODE);
-
+        DatabaseReference eventRef = database.eventRef;
         String event_key = eventRef.push().getKey();
         event.setEvent_key(event_key);
+        event.setOrganizer_key(organizer_key);
         eventRef.child(event_key).setValue(event)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -53,7 +53,8 @@ public class EventController {
 
     //GET events
     public void getEvents(String organizer_key, final GetEventsInterface getEventsInterface) {
-        final Query eventsRef = database.organizerRef.child(organizer_key).child(EVENT_NODE);
+//        final Query eventsRef = database.organizerRef.child(organizer_key).child(EVENT_NODE);
+        Query eventsRef = database.eventRef.orderByChild("organizer_key").equalTo(organizer_key);
 
         eventsRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -66,7 +67,6 @@ public class EventController {
                     }
                     getEventsInterface.onGetEvents(events);
                 }
-                eventsRef.removeEventListener(this);
             }
 
             @Override
@@ -76,27 +76,31 @@ public class EventController {
         });
     }
 
-    public void getEvent(String organizer_key, String event_key, final GetEventHandler getEventHandler){
-        DatabaseReference eventRef = database.organizerRef.child(organizer_key).child(EVENT_NODE).child(event_key);
+    public void getEvent(final String organizer_key, String event_key, final GetEventHandler getEventHandler){
+//        DatabaseReference eventRef = database.organizerRef.child(organizer_key).child(EVENT_NODE).child(event_key);
+        DatabaseReference eventRef = database.eventRef.child(event_key);
         eventRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     Event event = dataSnapshot.getValue(Event.class);
-                    getEventHandler.onGetEvent(event);
+                    if(event.getOrganizer_key().equals(organizer_key)) {
+                        getEventHandler.onGetEvent(event);
+                    }
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("error im get event", databaseError.getMessage());
+                Log.e("error in get event", databaseError.getMessage());
             }
         });
     }
 
     public void updateEvent(String organizer_key, final String event_key, Event newEvent, final UpdateEventInterface updateEventInterface){
-        DatabaseReference organizerRef = database.organizerRef.child(organizer_key).child(EVENT_NODE).child(event_key);
-        organizerRef.setValue(newEvent)
+//        DatabaseReference organizerRef = database.organizerRef.child(organizer_key).child(EVENT_NODE).child(event_key);
+        DatabaseReference eventRef = database.eventRef.child(event_key);
+        eventRef.setValue(newEvent)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -113,7 +117,8 @@ public class EventController {
     }
 
     public void deleteEvent(String organizer_key, String event_key, final DeleteEventInterface deleteEventInterface){
-        DatabaseReference eventRef = database.organizerRef.child(organizer_key).child(EVENT_NODE).child(event_key);
+//        DatabaseReference eventRef = database.organizerRef.child(organizer_key).child(EVENT_NODE).child(event_key);
+        DatabaseReference eventRef = database.eventRef.child(event_key);
         eventRef.setValue(null).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

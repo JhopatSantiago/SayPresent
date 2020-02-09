@@ -6,6 +6,7 @@ public class Event {
     public String details;
     public String event_key;
     public String event_date;
+    public String organizer_key;
 
     public Event(){
 
@@ -23,6 +24,14 @@ public class Event {
         this.details = details;
         this.event_key = event_key;
         this.event_date = event_date;
+    }
+
+    public String getOrganizer_key() {
+        return organizer_key;
+    }
+
+    public void setOrganizer_key(String organizer_key) {
+        this.organizer_key = organizer_key;
     }
 
     public String getEvent_name() {

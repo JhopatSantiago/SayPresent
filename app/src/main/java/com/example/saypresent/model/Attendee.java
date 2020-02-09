@@ -9,24 +9,9 @@ public class Attendee {
     private String email;
     private String password;
     private String attendee_key;
+    private String event_key;
+    private String checkpoint_key;
 
-    public Attendee(String first_name, String middle_name, String last_name, String contact_number, String emergency_number, String email, String attendee_key){
-        this.first_name = first_name;
-        this.middle_name = middle_name;
-        this.last_name = last_name;
-        this.contact_number = contact_number;
-        this.emergency_number = emergency_number;
-        this.email = email;
-        this.attendee_key = attendee_key;
-    }
-    public Attendee(String first_name, String middle_name, String last_name, String contact_number, String emergency_number, String email){
-        this.first_name = first_name;
-        this.middle_name = middle_name;
-        this.last_name = last_name;
-        this.contact_number = contact_number;
-        this.emergency_number = emergency_number;
-        this.email = email;
-    }
 
     public Attendee(String first_name, String middle_name, String last_name, String email, String password){
         this.first_name = first_name;
@@ -38,6 +23,13 @@ public class Attendee {
 
     public Attendee(){
 
+    }
+    public String getEvent_key() {
+        return event_key;
+    }
+
+    public void setEvent_key(String event_key) {
+        this.event_key = event_key;
     }
 
     public String getFirst_name() {

@@ -84,10 +84,10 @@ public class addEvent extends AppCompatActivity {
                 if(success){
                     loadingDialog.dismissDialog();
                     Log.i("success", "Successfully created application");
-                    showMessage("Successfully created application");
+                    showMessage("Successfully created event!");
                     clearFields();
                 }else{
-                    showMessage("Failure in creating application");
+                    showMessage("Failure in creating event!");
                 }
             }
         };

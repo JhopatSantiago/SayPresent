@@ -15,9 +15,3 @@
 /app/src/main/java/com/example/saypresent/TestingActivity.java
 /app/src/main/res/layout/activity_testing.xml
 /app/google-services.json
-app/src/main/res/layout/activity_event_list.xml
-app/src/main/java/com/example/saypresent/EventListActivity.java
-app/src/main/java/com/example/saypresent/checkpoint_list.java
-app/src/main/res/layout/activity_checkpoint_list.xml
-app/src/main/res/layout/checkpoints_list.xml
-app/src/main/java/com/example/saypresent/adapter/CheckpointsAdapter.java

@@ -8,6 +8,7 @@ public class EventCheckpoint {
     private String checkpoint_location;
     private String checkpoint_details;
     private String checkpoint_key;
+    private String event_key;
 
     public EventCheckpoint(){}
 
@@ -22,6 +23,26 @@ public class EventCheckpoint {
         this.checkpoint_location = checkpoint_location;
         this.checkpoint_details = checkpoint_details;
         this.checkpoint_key = checkpoint_key;
+    }
+
+    public void setCheckpoint_name(String checkpoint_name) {
+        this.checkpoint_name = checkpoint_name;
+    }
+
+    public void setCheckpoint_location(String checkpoint_location) {
+        this.checkpoint_location = checkpoint_location;
+    }
+
+    public void setCheckpoint_details(String checkpoint_details) {
+        this.checkpoint_details = checkpoint_details;
+    }
+
+    public String getEvent_key() {
+        return event_key;
+    }
+
+    public void setEvent_key(String event_key) {
+        this.event_key = event_key;
     }
 
     public String getCheckpoint_name() {
