@@ -11,6 +11,7 @@ public class Attendee {
     private String attendee_key;
     private String event_key;
     private String checkpoint_key;
+    private String datetime;
 
 
     public Attendee(String first_name, String middle_name, String last_name, String email, String password){
@@ -23,6 +24,18 @@ public class Attendee {
 
     public Attendee(){
 
+    }
+
+    public void removePassword(){
+        this.password = null;
+    }
+
+    public String getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
     }
 
     public String getCheckpoint_key() {

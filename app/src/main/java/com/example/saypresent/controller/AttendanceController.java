@@ -1,5 +1,6 @@
 package com.example.saypresent.controller;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AttendanceController {
@@ -29,6 +32,7 @@ public class AttendanceController {
 
     private GetAttendeeInterface getAttendeeInterface;
     private AttendeeController attendeeController = new AttendeeController();
+    private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
 
     /**
@@ -46,7 +50,8 @@ public class AttendanceController {
     public void recordAttendance(final String event_key, final String checkpoint_key, final String attendee_key, final RecordAttendance recordAttendance){
         final DatabaseReference attendanceRef = database.attendanceRef;
         Query eventAttendeeRef = database.event_attendeeRef.orderByChild("event_key").equalTo(event_key);
-        Log.i("event_key", event_key);
+
+        final String date = formatter.format(new Date());
         eventAttendeeRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -55,6 +60,8 @@ public class AttendanceController {
                     boolean flag = false;
                     for (DataSnapshot attendeeSnap : dataSnapshot.getChildren()){
                         Attendee attendee = attendeeSnap.getValue(Attendee.class);
+                        attendee.removePassword();
+                        attendee.setDatetime(date);
                         if (attendee.getAttendee_key().equals(attendee_key)){
                             flag = true;
                             attendanceRef.child(checkpoint_key).child(attendee_key).setValue(attendee)
@@ -75,7 +82,6 @@ public class AttendanceController {
                     }
                     if (!flag) {
                         recordAttendance.onRecord(false, -1);
-
                     }
                 }else{
                     System.out.println("data snapshot does not exist");
