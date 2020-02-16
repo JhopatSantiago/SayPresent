@@ -5,9 +5,11 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.StateSet;
@@ -16,10 +18,12 @@ import android.view.SurfaceView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.saypresent.controller.AttendanceController;
 import com.example.saypresent.controller.AttendeeController;
 import com.example.saypresent.model.Attendee;
 import com.example.saypresent.utils.AddAttendeeInterface;
 import com.example.saypresent.utils.GetAttendeeInterface;
+import com.example.saypresent.utils.RecordAttendance;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.Frame;
@@ -45,8 +49,11 @@ public class QRScannerActivity extends AppCompatActivity {
 
     private String organizer_key;
     private String event_key;
+    private String checkpoint_key;
+    private String action;
 
     private AttendeeController attendeeController = new AttendeeController();
+    private AttendanceController attendanceController = new AttendanceController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +67,9 @@ public class QRScannerActivity extends AppCompatActivity {
 
         organizer_key = intent.getStringExtra("organizer_key");
         event_key = intent.getStringExtra("event_key");
+        checkpoint_key = intent.getStringExtra("checkpoint_key");
+        action = intent.getStringExtra("action");
+        System.out.println(event_key);
 
     }
 
@@ -127,13 +137,16 @@ public class QRScannerActivity extends AppCompatActivity {
     private void setBarcodeTxt(String data){
         if (!data.equals(this.tmp_eventKey)){
             tmp_eventKey = data;
-
             attendeeController.getAttendee(data, new GetAttendeeInterface() {
                 @Override
                 public void onGetAttendee(Attendee attendee) {
                     String name = attendee.getFirst_name() + " " + attendee.getLast_name();
                     barcodeTxt.setText(name);
-                    addAttendeeOnEvent(attendee);
+                    if (action.equals("event")) {
+                        addAttendeeOnEvent(attendee);
+                    }else if (action.equals("checkpoint")){
+                        RecordAttendance(attendee);
+                    }
                 }
             });
 
@@ -141,22 +154,66 @@ public class QRScannerActivity extends AppCompatActivity {
     }
 
     private void addAttendeeOnEvent(Attendee attendee){
+        Log.i("action", action);
         attendeeController.addAttendeeOnEvent(organizer_key, event_key, attendee, new AddAttendeeInterface() {
             @Override
             public void onAddAttendee(boolean success) {
                 if(success){
                     Log.i("success", "success");
+                    alert("Success", "Successfully added attendee!");
                 }else{
                     Log.i("failed", "failed");
+                    alert("Failed","Attendee already registered to this event");
                 }
             }
         });
+    }
+
+    private void alert(String title,final String message){
+        final AlertDialog.Builder alert = new AlertDialog.Builder(QRScannerActivity.this);
+        alert.setTitle(title);
+        alert.setMessage(message);
+        alert.setPositiveButton("ok", null);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                alert.show();
+            }
+        }, 0);
+    }
+
+    private void RecordAttendance(Attendee attendee){
+        attendanceController.recordAttendance(event_key, checkpoint_key, attendee.getAttendee_key(), new RecordAttendance() {
+            @Override
+            public void onRecord(boolean success, int status) {
+                if (success){
+                    alert("Success", "Successfully recorded attendance");
+                }else{
+                    alert("Failed", decodeStatus(status));
+                }
+            }
+        });
+    }
+
+
+    private String decodeStatus(int i){
+
+        if (i == 0){
+            return "Failed";
+        }else if (i == 1){
+            return "Success";
+        }
+
+        return "User not found!";
     }
 
     @Override
     protected void onPause(){
         super.onPause();
         cameraSource.release();
+        this.event_key = null;
+        this.tmp_eventKey = null;
     }
 
     @Override

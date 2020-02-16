@@ -13,12 +13,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EdgeEffect;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.saypresent.adapter.CheckpointsAdapter;
 import com.example.saypresent.controller.EventCheckpointController;
 import com.example.saypresent.controller.EventController;
 import com.example.saypresent.model.Event;
 import com.example.saypresent.model.EventCheckpoint;
+import com.example.saypresent.utils.AddCheckpointInterface;
 import com.example.saypresent.utils.CustomEventClickListener;
 import com.example.saypresent.utils.GetEventCheckpoints;
 import com.example.saypresent.utils.GetEventHandler;
@@ -39,6 +41,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private TextView event_location;
     private Button qr_button;
     private Button eventAttendeeBtn;
+    private Button addCheckpointBtn;
 
     private EventController eventController = new EventController();
     private GetEventHandler getEventHandler;
@@ -63,14 +66,15 @@ public class EventDetailActivity extends AppCompatActivity {
         event_location = (TextView) findViewById(R.id.event_location);
         qr_button = (Button) findViewById(R.id.btn_qrcode);
         eventAttendeeBtn = (Button) findViewById(R.id.eventAttendeeBtn);
+        addCheckpointBtn = (Button) findViewById(R.id.addCheckpointBtn);
 
         //this button will trigger qr_code scanner of an event
         qr_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent scannerIntent = new Intent(getApplicationContext(), QRScannerActivity.class);
-                scannerIntent.putExtra("organizer_key", organizer_key);
                 scannerIntent.putExtra("event_key", event_key);
+                scannerIntent.putExtra("action", "event");
                 startActivity(scannerIntent);
             }
         });
@@ -85,6 +89,15 @@ public class EventDetailActivity extends AppCompatActivity {
             }
         });
 
+        addCheckpointBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               Intent addCheckpointIntent = new Intent(getApplicationContext(), AddCheckpointActivity.class);
+               addCheckpointIntent.putExtra("event_key", event_key);
+               startActivity(addCheckpointIntent);
+            }
+        });
+
 
         recyclerView = (RecyclerView) findViewById(R.id.checkpointRecycler);
         recyclerView.setHasFixedSize(true);
@@ -92,17 +105,13 @@ public class EventDetailActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
 
-        eventCheckpointController.getEventCheckpoints(event_key, new GetEventCheckpoints() {
-            @Override
-            public void onGetCheckpoint(List<EventCheckpoint> eventCheckpoints) {
-                if(eventCheckpoints != null){
-                    instantiateAdapter(eventCheckpoints);
-                }else{
-                    recyclerView.setVisibility(View.GONE);
-                }
-            }
-        });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initialize();
     }
 
     private void initialize(){
@@ -117,6 +126,17 @@ public class EventDetailActivity extends AppCompatActivity {
             }
         };
         eventController.getEvent(organizer_key, event_key, getEventHandler);
+
+        eventCheckpointController.getEventCheckpoints(event_key, new GetEventCheckpoints() {
+            @Override
+            public void onGetCheckpoint(List<EventCheckpoint> eventCheckpoints) {
+                if(eventCheckpoints != null){
+                    instantiateAdapter(eventCheckpoints);
+                }else{
+                    recyclerView.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     private void instantiateAdapter(final List<EventCheckpoint> eventCheckpoints){
@@ -128,6 +148,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(), CheckpointActivity.class);
                 intent.putExtra("checkpoint_key", checkpoint_key);
+                intent.putExtra("event_key", event_key);
                 startActivity(intent);
             }
         };

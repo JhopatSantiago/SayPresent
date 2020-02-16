@@ -35,25 +35,69 @@ public class AttendeeController {
      * @param attendee
      * @param addAttendeeInterface
      */
-    public void addAttendeeOnEvent(String organizer_key, String event_key, Attendee attendee, final AddAttendeeInterface addAttendeeInterface){
+    public void addAttendeeOnEvent(String organizer_key, String event_key, final Attendee attendee, final AddAttendeeInterface addAttendeeInterface){
 //        DatabaseReference attendeeRef = database.organizerRef.child(organizer_key).child(EVENT_NODE).child(event_key).child(ATTENDEE_NODE);
-        DatabaseReference attendeeRef = database.event_attendeeRef;
-        String attendee_key = attendee.getAttendee_key();
+        final DatabaseReference attendeeRef = database.event_attendeeRef;
+        final String event_attendee_key = attendeeRef.push().getKey();
+        final String attendee_key = attendee.getAttendee_key();
         attendee.setEvent_key(event_key);
         attendee.setAttendee_key(attendee_key);
-        attendeeRef.child(attendee_key).setValue(attendee)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        addAttendeeInterface.onAddAttendee(true);
+
+        Query checkAttendeeRef = database.event_attendeeRef.orderByChild("event_key").equalTo(event_key);
+        checkAttendeeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                boolean attendeeAlreadyRegistered = false;
+                if (dataSnapshot.exists()){
+                    for (DataSnapshot checkAttendeeSnap: dataSnapshot.getChildren()){
+                        Attendee checkAttendee = checkAttendeeSnap.getValue(Attendee.class);
+                        if(attendee_key.equals(checkAttendee.getAttendee_key())){
+                            attendeeAlreadyRegistered = true;
+//                            addAttendeeInterface.onAddAttendee(false);
+                            break;
+                        }
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+                    if (!attendeeAlreadyRegistered){
+                        attendeeRef.child(event_attendee_key).setValue(attendee)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        addAttendeeInterface.onAddAttendee(true);
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        addAttendeeInterface.onAddAttendee(false);
+                                    }
+                                });
+                    }else {
                         addAttendeeInterface.onAddAttendee(false);
                     }
-                });
+                }else{
+                    attendeeRef.child(event_attendee_key).setValue(attendee)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    addAttendeeInterface.onAddAttendee(true);
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    addAttendeeInterface.onAddAttendee(false);
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("database error", databaseError.getMessage());
+            }
+        });
+
+
     }
 
 

@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.example.saypresent.adapter.EventAttendeeAdapter;
+import com.example.saypresent.adapter.AttendeeAdapter;
 import com.example.saypresent.controller.AttendeeController;
 import com.example.saypresent.model.Attendee;
 import com.example.saypresent.utils.CustomEventClickListener;
@@ -53,12 +53,14 @@ public class EventAttendeeActivity extends AppCompatActivity {
     }
 
     private void InstantiateAdapter(final List<Attendee> attendees){
-        mAdapter = new EventAttendeeAdapter(attendees, new CustomEventClickListener() {
-            @Override
-            public void onItemClick(View v, int i) {
-                Log.i("attendee first name", attendees.get(i).getFirst_name());
-            }
-        });
+        if (attendees != null) {
+            mAdapter = new AttendeeAdapter(attendees, new CustomEventClickListener() {
+                @Override
+                public void onItemClick(View v, int i) {
+                    Log.i("attendee first name", attendees.get(i).getFirst_name());
+                }
+            });
+        }
 
         recyclerView.setAdapter(mAdapter);
     }

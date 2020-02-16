@@ -24,6 +24,15 @@ public class Attendee {
     public Attendee(){
 
     }
+
+    public String getCheckpoint_key() {
+        return checkpoint_key;
+    }
+
+    public void setCheckpoint_key(String checkpoint_key) {
+        this.checkpoint_key = checkpoint_key;
+    }
+
     public String getEvent_key() {
         return event_key;
     }

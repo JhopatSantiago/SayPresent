@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/event_name"
-        android:layout_width="169dp"
+        android:layout_width="400dp"
         android:layout_height="49dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/montserrat_regular"
@@ -25,7 +25,7 @@
 
     <TextView
         android:id="@+id/event_location"
-        android:layout_width="169dp"
+        android:layout_width="400dp"
         android:layout_height="49dp"
         android:layout_marginTop="72dp"
         android:fontFamily="@font/montserrat_regular"
@@ -65,8 +65,10 @@
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_qrcode" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_qrcode"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/eventAttendeeBtn"
@@ -82,5 +84,19 @@
         app:layout_constraintStart_toEndOf="@+id/btn_qrcode"
         app:layout_constraintTop_toBottomOf="@+id/btn_qrcode"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/addCheckpointBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="76dp"
+        android:text="Add Checkpoint"
+        app:layout_constraintBottom_toTopOf="@+id/checkpointRecycler"
+        app:layout_constraintEnd_toStartOf="@+id/checkpointRecycler"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eventAttendeeBtn"
+        app:layout_constraintVertical_bias="0.68" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

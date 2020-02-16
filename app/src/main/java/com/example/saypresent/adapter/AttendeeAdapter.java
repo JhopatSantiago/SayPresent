@@ -14,11 +14,11 @@ import com.example.saypresent.utils.CustomEventClickListener;
 
 import java.util.List;
 
-public class EventAttendeeAdapter  extends RecyclerView.Adapter<EventAttendeeAdapter.ViewHolder> {
+public class AttendeeAdapter extends RecyclerView.Adapter<AttendeeAdapter.ViewHolder> {
     private List<Attendee> attendees;
     private CustomEventClickListener customEventClickListener;
 
-    public EventAttendeeAdapter(List<Attendee> attendees, CustomEventClickListener customEventClickListener){
+    public AttendeeAdapter(List<Attendee> attendees, CustomEventClickListener customEventClickListener){
         this.attendees = attendees;
         this.customEventClickListener = customEventClickListener;
     }

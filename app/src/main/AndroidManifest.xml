@@ -3,6 +3,8 @@
     package="com.example.saypresent">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature
@@ -16,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EventAttendeeActivity"></activity>
+        <activity android:name=".AddCheckpointActivity"></activity>
+        <activity android:name=".EventAttendeeActivity" />
         <activity android:name=".CheckpointActivity" />
         <activity android:name=".QRScannerActivity" />
         <activity android:name=".EventDetailActivity" />
