@@ -11,7 +11,7 @@ public class Attendee {
     private String attendee_key;
     private String event_key;
     private String checkpoint_key;
-    private String datetime;
+    private String timestamp;
 
 
     public Attendee(String first_name, String middle_name, String last_name, String email, String password){
@@ -22,6 +22,15 @@ public class Attendee {
         this.password = password;
     }
 
+    public Attendee(String first_name, String middle_name, String last_name, String email, String password, String timestamp){
+        this.first_name = first_name;
+        this.middle_name = middle_name;
+        this.last_name = last_name;
+        this.password = password;
+        this.email = email;
+        this.timestamp = timestamp;
+    }
+
     public Attendee(){
 
     }
@@ -30,12 +39,13 @@ public class Attendee {
         this.password = null;
     }
 
-    public String getDatetime() {
-        return datetime;
+
+    public String getTimestamp() {
+        return timestamp;
     }
 
-    public void setDatetime(String datetime) {
-        this.datetime = datetime;
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getCheckpoint_key() {

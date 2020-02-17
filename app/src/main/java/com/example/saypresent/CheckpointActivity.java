@@ -20,7 +20,6 @@ import com.example.saypresent.utils.CustomEventClickListener;
 import com.example.saypresent.utils.GetEventAttendeeInterface;
 import com.example.saypresent.utils.GetEventCheckpoint;
 
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -87,13 +86,14 @@ public class CheckpointActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int i) {
                 Log.i("attendee key", attendees.get(i).getAttendee_key());
+                System.out.println(attendees.get(i).getTimestamp());
             }
         });
         recyclerView.setAdapter(mAdapter);
     }
 
    private void initialize(){
-       eventCheckpointController.getEventCheckpoint(checkpoint_key, new GetEventCheckpoint() {
+       eventCheckpointController.getEventCheckpoint(event_key,checkpoint_key, new GetEventCheckpoint() {
            @Override
            public void onGetEventCheckpoint(EventCheckpoint eventCheckpoint) {
                String checkpoint_name = eventCheckpoint.getCheckpoint_name();

@@ -35,51 +35,27 @@ public class AttendeeController {
      * @param attendee
      * @param addAttendeeInterface
      */
-    public void addAttendeeOnEvent(String organizer_key, String event_key, final Attendee attendee, final AddAttendeeInterface addAttendeeInterface){
+    public void addAttendeeOnEvent(String organizer_key, final String event_key, final Attendee attendee, final AddAttendeeInterface addAttendeeInterface){
 //        DatabaseReference attendeeRef = database.organizerRef.child(organizer_key).child(EVENT_NODE).child(event_key).child(ATTENDEE_NODE);
         final DatabaseReference attendeeRef = database.event_attendeeRef;
-        final String event_attendee_key = attendeeRef.push().getKey();
         final String attendee_key = attendee.getAttendee_key();
         attendee.setEvent_key(event_key);
         attendee.setAttendee_key(attendee_key);
-
-        Query checkAttendeeRef = database.event_attendeeRef.orderByChild("event_key").equalTo(event_key);
+//        Query checkAttendeeRef = database.event_attendeeRef.orderByChild("event_key").equalTo(event_key);
+        Query checkAttendeeRef = database.event_attendeeRef.child(event_key).child(attendee_key);
         checkAttendeeRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 boolean attendeeAlreadyRegistered = false;
                 if (dataSnapshot.exists()){
-                    for (DataSnapshot checkAttendeeSnap: dataSnapshot.getChildren()){
-                        Attendee checkAttendee = checkAttendeeSnap.getValue(Attendee.class);
-                        if(attendee_key.equals(checkAttendee.getAttendee_key())){
-                            attendeeAlreadyRegistered = true;
-//                            addAttendeeInterface.onAddAttendee(false);
-                            break;
-                        }
-                    }
-                    if (!attendeeAlreadyRegistered){
-                        attendeeRef.child(event_attendee_key).setValue(attendee)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        addAttendeeInterface.onAddAttendee(true);
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        addAttendeeInterface.onAddAttendee(false);
-                                    }
-                                });
-                    }else {
-                        addAttendeeInterface.onAddAttendee(false);
-                    }
+//                    Attendee already registered
+                    addAttendeeInterface.onAddAttendee(false);
                 }else{
-                    attendeeRef.child(event_attendee_key).setValue(attendee)
+                    attendeeRef.child(event_key).child(attendee_key).setValue(attendee_key)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    addAttendeeInterface.onAddAttendee(true);
+                                   addAttendeeInterface.onAddAttendee(true);
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -182,20 +158,29 @@ public class AttendeeController {
      * GET ALL ATTENDEES OF A SPECIFIC EVENT
      * @param event_key
      */
+
+    private boolean attendeeComplete = false;
+    private List<Attendee> attendees = new ArrayList<>();
+
     public void getEventAtteendees(String event_key, final GetEventAttendeeInterface getEventAttendeeInterface){
-        Query attendeeRef = database.event_attendeeRef.orderByChild("event_key").equalTo(event_key);
+        Query attendeeRef = database.event_attendeeRef.child(event_key);
 //        DatabaseReference attendeeRef = database.event_attendeeRef;
-        final List<Attendee> attendees = new ArrayList<>();
 
         attendeeRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
+                    List<String> attendees = new ArrayList<>();
                     for (DataSnapshot ds : dataSnapshot.getChildren()){
-                        Attendee attendee = ds.getValue(Attendee.class);
-                        attendees.add(attendee);
+                        String attendee_key = ds.getValue(String.class);
+                        getAttendee(attendee_key, new GetAttendeeInterface() {
+                            @Override
+                            public void onGetAttendee(Attendee attendee) {
+                                handleAttendees(attendee, getEventAttendeeInterface);
+                            }
+                        });
                     }
-                    getEventAttendeeInterface.onGetEventAttendees(attendees);
+                    attendeeComplete = true;
                 }else {
                     getEventAttendeeInterface.onGetEventAttendees(null);
                 }
@@ -206,6 +191,15 @@ public class AttendeeController {
                 Log.e("database error", databaseError.getMessage());
             }
         });
+    }
+
+
+    private void handleAttendees(Attendee attendee, GetEventAttendeeInterface getEventAttendeeInterface){
+        attendees.add(attendee);
+        if (attendeeComplete) {
+            System.out.println(attendees);
+            getEventAttendeeInterface.onGetEventAttendees(attendees);
+        }
     }
 
     /**
@@ -237,7 +231,7 @@ public class AttendeeController {
     }
 
     /**
-     * Get Attendee
+     * Get Attendee from all attendee list
      * @param attendee_key
      * @param getAttendeeInterface
      */

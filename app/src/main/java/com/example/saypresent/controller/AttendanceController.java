@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.saypresent.database.Database;
+import com.example.saypresent.model.Attendance;
 import com.example.saypresent.model.Attendee;
 import com.example.saypresent.utils.GetAttendeeInterface;
 import com.example.saypresent.utils.GetEventAttendeeInterface;
@@ -48,43 +49,33 @@ public class AttendanceController {
      */
 
     public void recordAttendance(final String event_key, final String checkpoint_key, final String attendee_key, final RecordAttendance recordAttendance){
-        final DatabaseReference attendanceRef = database.attendanceRef;
-        Query eventAttendeeRef = database.event_attendeeRef.orderByChild("event_key").equalTo(event_key);
+        final DatabaseReference attendanceRef = database.attendanceRef.child(checkpoint_key);
+        Query eventAttendeeRef = database.event_attendeeRef.child(event_key).child(attendee_key);
+
+        final String attendance_key = attendanceRef.push().getKey();
+
 
         final String date = formatter.format(new Date());
+
+        final Attendance attendance = new Attendance(attendee_key, date);
         eventAttendeeRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
-                    System.out.println(dataSnapshot);
-                    boolean flag = false;
-                    for (DataSnapshot attendeeSnap : dataSnapshot.getChildren()){
-                        Attendee attendee = attendeeSnap.getValue(Attendee.class);
-                        attendee.removePassword();
-                        attendee.setDatetime(date);
-                        if (attendee.getAttendee_key().equals(attendee_key)){
-                            flag = true;
-                            attendanceRef.child(checkpoint_key).child(attendee_key).setValue(attendee)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            recordAttendance.onRecord(true, 1);
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            recordAttendance.onRecord(false, 0);
-                                        }
-                                    });
-                            break;
-                        }
-                    }
-                    if (!flag) {
-                        recordAttendance.onRecord(false, -1);
-                    }
+                    attendanceRef.child(attendance_key).setValue(attendance)
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    recordAttendance.onRecord(false, 0);
+                                }
+                            })
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    recordAttendance.onRecord(true, 1);
+                                }
+                            });
                 }else{
-                    System.out.println("data snapshot does not exist");
                     recordAttendance.onRecord(false, -1);
                 }
             }
@@ -96,18 +87,27 @@ public class AttendanceController {
         });
     }
 
+    private boolean isAttendanceDone = false;
+    private List<Attendee> attendees = new ArrayList<>();
+
     public void getAttendance(String checkpoint_key, final GetEventAttendeeInterface getEventAttendeeInterface){
         Query attendanceRef = database.attendanceRef.child(checkpoint_key);
         attendanceRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Attendee> attendees = new ArrayList<>();
+//                List<Attendee> attendees = new ArrayList<>();
                 if (dataSnapshot.exists()){
                     for (DataSnapshot attendanceRef : dataSnapshot.getChildren()){
-                        Attendee attendee = attendanceRef.getValue(Attendee.class);
-                        attendees.add(attendee);
+                        final Attendee attendeeDB = attendanceRef.getValue(Attendee.class);
+                        attendeeController.getAttendee(attendeeDB.getAttendee_key(), new GetAttendeeInterface() {
+                            @Override
+                            public void onGetAttendee(Attendee attendee) {
+                                attendee.setTimestamp(attendeeDB.getTimestamp());
+                                ReturnAttendance(attendee, getEventAttendeeInterface);
+                            }
+                        });
                     }
-                    getEventAttendeeInterface.onGetEventAttendees(attendees);
+                    isAttendanceDone = true;
                 }
             }
 
@@ -117,4 +117,12 @@ public class AttendanceController {
             }
         });
     }
+
+    private void ReturnAttendance(Attendee attendee, GetEventAttendeeInterface getEventAttendeeInterface){
+        attendees.add(attendee);
+        if (isAttendanceDone){
+            getEventAttendeeInterface.onGetEventAttendees(attendees);
+        }
+    }
+
 }

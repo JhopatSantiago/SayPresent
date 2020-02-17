@@ -34,8 +34,8 @@ public class EventController {
         DatabaseReference eventRef = database.eventRef;
         String event_key = eventRef.push().getKey();
         event.setEvent_key(event_key);
-        event.setOrganizer_key(organizer_key);
-        eventRef.child(event_key).setValue(event)
+//        event.setOrganizer_key(organizer_key);
+        eventRef.child(organizer_key).child(event_key).setValue(event)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -54,7 +54,8 @@ public class EventController {
     //GET events
     public void getEvents(String organizer_key, final GetEventsInterface getEventsInterface) {
 //        final Query eventsRef = database.organizerRef.child(organizer_key).child(EVENT_NODE);
-        Query eventsRef = database.eventRef.orderByChild("organizer_key").equalTo(organizer_key);
+//        Query eventsRef = database.eventRef.orderByChild("organizer_key").equalTo(organizer_key);
+        Query eventsRef = database.eventRef.child(organizer_key);
 
         eventsRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -78,15 +79,15 @@ public class EventController {
 
     public void getEvent(final String organizer_key, String event_key, final GetEventHandler getEventHandler){
 //        DatabaseReference eventRef = database.organizerRef.child(organizer_key).child(EVENT_NODE).child(event_key);
-        DatabaseReference eventRef = database.eventRef.child(event_key);
+        DatabaseReference eventRef = database.eventRef.child(organizer_key).child(event_key);
         eventRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     Event event = dataSnapshot.getValue(Event.class);
-                    if(event.getOrganizer_key().equals(organizer_key)) {
-                        getEventHandler.onGetEvent(event);
-                    }
+                    getEventHandler.onGetEvent(event);
+                }else{
+                    getEventHandler.onGetEvent(null);
                 }
             }
 
@@ -99,7 +100,7 @@ public class EventController {
 
     public void updateEvent(String organizer_key, final String event_key, Event newEvent, final UpdateEventInterface updateEventInterface){
 //        DatabaseReference organizerRef = database.organizerRef.child(organizer_key).child(EVENT_NODE).child(event_key);
-        DatabaseReference eventRef = database.eventRef.child(event_key);
+        DatabaseReference eventRef = database.eventRef.child(organizer_key).child(event_key);
         eventRef.setValue(newEvent)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -118,7 +119,7 @@ public class EventController {
 
     public void deleteEvent(String organizer_key, String event_key, final DeleteEventInterface deleteEventInterface){
 //        DatabaseReference eventRef = database.organizerRef.child(organizer_key).child(EVENT_NODE).child(event_key);
-        DatabaseReference eventRef = database.eventRef.child(event_key);
+        DatabaseReference eventRef = database.eventRef.child(organizer_key).child(event_key);
         eventRef.setValue(null).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

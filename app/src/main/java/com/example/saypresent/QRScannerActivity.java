@@ -170,6 +170,7 @@ public class QRScannerActivity extends AppCompatActivity {
     }
 
     private void alert(String title,final String message){
+        System.out.println("GG");
         final AlertDialog.Builder alert = new AlertDialog.Builder(QRScannerActivity.this);
         alert.setTitle(title);
         alert.setMessage(message);
@@ -180,7 +181,7 @@ public class QRScannerActivity extends AppCompatActivity {
             public void run() {
                 alert.show();
             }
-        }, 0);
+        }, 200);
     }
 
     private void RecordAttendance(Attendee attendee){
@@ -212,7 +213,7 @@ public class QRScannerActivity extends AppCompatActivity {
     protected void onPause(){
         super.onPause();
         cameraSource.release();
-        this.event_key = null;
+//        this.event_key = null;
         this.tmp_eventKey = null;
     }
 
