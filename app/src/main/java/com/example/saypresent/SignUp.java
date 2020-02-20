@@ -43,6 +43,7 @@ public class SignUp extends AppCompatActivity {
     private boolean isRegSuccess = false;
 
     private final String REQUIRED = "Required";
+    private String user_type;
 
     private OrganizerController organizerController;
     private RegistrationInterface registrationInterface;
@@ -57,6 +58,10 @@ public class SignUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        Intent intent = getIntent();
+
+        this.user_type = intent.getStringExtra("user_type");
 
         first_name_field = (EditText) findViewById(R.id.first_name);
         middle_name_field = (EditText) findViewById(R.id.middle_name);
@@ -154,7 +159,6 @@ public class SignUp extends AppCompatActivity {
 
         sign_up_button.setEnabled(false);
         loadingDialog.startLoadingDialog();
-        String user_type = "attendee";
 
         if(user_type.equals("organizer")){
             Organizer organizer = new Organizer(first_name, middle_name, last_name, email, password);
