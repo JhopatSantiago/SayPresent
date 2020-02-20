@@ -24,6 +24,8 @@ import com.example.saypresent.utils.AddCheckpointInterface;
 import com.example.saypresent.utils.CustomEventClickListener;
 import com.example.saypresent.utils.GetEventCheckpoints;
 import com.example.saypresent.utils.GetEventHandler;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.List;
 
@@ -39,9 +41,9 @@ public class EventDetailActivity extends AppCompatActivity {
 
     private TextView event_name;
     private TextView event_location;
-    private Button qr_button;
-    private Button eventAttendeeBtn;
-    private Button addCheckpointBtn;
+//    private Button qr_button;
+//    private Button eventAttendeeBtn;
+//    private Button addCheckpointBtn;
 
     private EventController eventController = new EventController();
     private GetEventHandler getEventHandler;
@@ -52,6 +54,9 @@ public class EventDetailActivity extends AppCompatActivity {
 
     private List<EventCheckpoint> eventCheckpoints;
     private EventCheckpointController eventCheckpointController = new EventCheckpointController();
+
+    private FloatingActionMenu floatingActionMenu;
+    private FloatingActionButton addCheckpoint,scanQR,addAttendee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +69,13 @@ public class EventDetailActivity extends AppCompatActivity {
         initialize();
         event_name = (TextView) findViewById(R.id.event_name);
         event_location = (TextView) findViewById(R.id.event_location);
-        qr_button = (Button) findViewById(R.id.btn_qrcode);
-        eventAttendeeBtn = (Button) findViewById(R.id.eventAttendeeBtn);
-        addCheckpointBtn = (Button) findViewById(R.id.addCheckpointBtn);
+        floatingActionMenu = (FloatingActionMenu) findViewById(R.id.floatingActionLabel);
+        addCheckpoint = (FloatingActionButton) findViewById(R.id.addCheckpointBtn);
+        scanQR = (FloatingActionButton) findViewById(R.id.btn_qrcode);
+        addAttendee = (FloatingActionButton) findViewById(R.id.eventAttendeeBtn);
 
         //this button will trigger qr_code scanner of an event
-        qr_button.setOnClickListener(new View.OnClickListener() {
+        scanQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent scannerIntent = new Intent(getApplicationContext(), QRScannerActivity.class);
@@ -80,7 +86,7 @@ public class EventDetailActivity extends AppCompatActivity {
         });
 
         //this button will trigger event attendee(EventAttendeeActivity.java) list activity
-        eventAttendeeBtn.setOnClickListener(new View.OnClickListener() {
+        addAttendee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent eventAttendeeIntent = new Intent(getApplicationContext(), EventAttendeeActivity.class);
@@ -89,7 +95,7 @@ public class EventDetailActivity extends AppCompatActivity {
             }
         });
 
-        addCheckpointBtn.setOnClickListener(new View.OnClickListener() {
+        addCheckpoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                Intent addCheckpointIntent = new Intent(getApplicationContext(), AddCheckpointActivity.class);

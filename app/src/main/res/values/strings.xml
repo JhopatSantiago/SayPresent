@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">SayPresent</string>
     <string name="title_activity_login">Login</string>
+    <string name="scan">Scan QR Code</string>
+    <string name="checkpoint">Add Checkpoint</string>
+    <string name="event_attendee">Add Event Attendee</string>
 </resources>

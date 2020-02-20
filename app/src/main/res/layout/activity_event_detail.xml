@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -39,64 +39,57 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_qrcode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="162dp"
-        android:layout_marginTop="59dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginBottom="503dp"
-        android:text="Scan QR"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event_location"
-        app:layout_constraintVertical_bias="0.0" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/checkpointRecycler"
-        android:layout_width="409dp"
-        android:layout_height="501dp"
+        android:layout_width="410dp"
+        android:layout_height="497dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="250dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_qrcode"
         app:layout_constraintVertical_bias="1.0" />
 
-    <Button
-        android:id="@+id/eventAttendeeBtn"
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/floatingActionLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="4dp"
-        android:text="Event Attendees"
-        app:layout_constraintBottom_toTopOf="@+id/checkpointRecycler"
-        app:layout_constraintEnd_toStartOf="@+id/checkpointRecycler"
-        app:layout_constraintHorizontal_bias="0.26"
-        app:layout_constraintStart_toEndOf="@+id/btn_qrcode"
-        app:layout_constraintTop_toBottomOf="@+id/btn_qrcode"
-        app:layout_constraintVertical_bias="0.0" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        app:menu_showShadow="true"
+        app:menu_fab_label=""
+        app:menu_openDirection="up"
+        app:menu_backgroundColor="@android:color/transparent">
 
-    <Button
-        android:id="@+id/addCheckpointBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="76dp"
-        android:text="Add Checkpoint"
-        app:layout_constraintBottom_toTopOf="@+id/checkpointRecycler"
-        app:layout_constraintEnd_toStartOf="@+id/checkpointRecycler"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eventAttendeeBtn"
-        app:layout_constraintVertical_bias="0.68" />
+        <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/btn_qrcode"
+        android:layout_width="24dp"
+        android:layout_height="30dp"
+        app:fab_size="mini"
+        app:fab_label="@string/scan"
+        android:src="@drawable/qr_code" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/addCheckpointBtn"
+            android:layout_width="24dp"
+            android:layout_height="30dp"
+            app:fab_size="mini"
+            app:fab_label="@string/checkpoint"
+            android:src="@drawable/location" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/eventAttendeeBtn"
+            android:layout_width="24dp"
+            android:layout_height="30dp"
+            app:fab_size="mini"
+            app:fab_label="@string/event_attendee"
+            android:src="@drawable/add_attendee" />
+    </com.github.clans.fab.FloatingActionMenu>
+
+
+</RelativeLayout>
