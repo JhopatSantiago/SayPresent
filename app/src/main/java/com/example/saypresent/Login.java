@@ -4,13 +4,18 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -33,7 +38,67 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
+        initialize();
+        
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        mCurrentViewPosition = mMediaPlayer.getCurrentPosition();
+        mVideoView.pause();
+    }
+    @Override
+    protected  void onResume(){
+        super.onResume();
+        mVideoView.start();
+        initialize();
+    }
+    @Override
+    protected  void onDestroy(){
+        super.onDestroy();
+        mMediaPlayer.release();
+        mMediaPlayer = null;
+    }
+    private void checkNetworkConnection()
+    {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setTitle("No Internet Connection");
+        builder.setMessage("Please check/turn on your Internet Connection");
+        builder.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which)
+            {
+                initialize();
+            }
+        });
 
+
+        android.app.AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+    }
+    private void isNetworkConnectionIsAvailable()
+    {
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork !=null && activeNetwork.isConnected();
+
+        if (isConnected)
+        {
+            Log.d("Network","Connected");
+//            return true;
+        }
+        else
+        {
+            checkNetworkConnection();
+            Log.d("Network","Not Connected");
+//            return false;
+        }
+    }
+
+    private void initialize(){
+    	isNetworkConnectionIsAvailable();
         Login = findViewById(R.id.Login);
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,22 +135,5 @@ public class Login extends AppCompatActivity {
                 }
             }
         });
-    }
-    @Override
-    protected void onPause(){
-        super.onPause();
-        mCurrentViewPosition = mMediaPlayer.getCurrentPosition();
-        mVideoView.pause();
-    }
-    @Override
-    protected  void onResume(){
-        super.onResume();
-        mVideoView.start();
-    }
-    @Override
-    protected  void onDestroy(){
-        super.onDestroy();
-        mMediaPlayer.release();
-        mMediaPlayer = null;
     }
 }
