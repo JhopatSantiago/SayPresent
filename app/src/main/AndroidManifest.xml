@@ -27,7 +27,7 @@
         <activity android:name=".QRScannerActivity" />
         <activity android:name=".EventDetailActivity" />
         <activity android:name=".TestingActivity" />
-        <activity android:name=".DisplayQRActivity" />
+        <activity android:name=".DisplayQRActivity" android:theme="@style/AppTheme.Users"/>
         <activity android:name=".EventActivity" />
         <activity android:name=".addEvent" /> <!-- FOR TESTING -->
         <activity android:name=".checkpoint_list" />

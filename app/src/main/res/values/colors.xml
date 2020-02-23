@@ -5,10 +5,17 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="teal">#01a1b1</color>
-//color scheme for splash
+
+    //color scheme for splash
     <color name="colorPrimarySplash">#8082d7</color>
     <color name="colorSecondarySplash">#89e3e4</color>
     <color name="colorAccentSplash">#ffffff</color>
+
     //label color
     <color name="label_black_transparent">#B2000000</color>
+
+    //color for user
+    <color name="colorPrimaryUser">#5B86E5</color>
+    <color name="colorSecondaryUser">#36D1DC</color>
+    <color name="colorAccentUser">#ffffff</color>
 </resources>
