@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.saypresent.controller.OrganizerController;
@@ -28,8 +29,8 @@ public class Dashboard extends AppCompatActivity {
     private Organizer organizerAttribute;
     private OrganizerController organizerController = new OrganizerController();
     private TextView dashboard_name;
-    Button addEvent;
-    Button eventView;
+    ImageView addEvent;
+    ImageView eventView;
     private GetOrganizerInterface getOrganizerInterface;
     private Database database = new Database();
 
@@ -53,7 +54,7 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        addEvent = findViewById(R.id.addEvent);
+        addEvent = (ImageView) findViewById(R.id.addEvent);
         addEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

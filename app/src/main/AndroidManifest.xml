@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.saypresent">
 
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -27,7 +26,9 @@
         <activity android:name=".QRScannerActivity" />
         <activity android:name=".EventDetailActivity" />
         <activity android:name=".TestingActivity" />
-        <activity android:name=".DisplayQRActivity" android:theme="@style/AppTheme.Users"/>
+        <activity
+            android:name=".DisplayQRActivity"
+            android:theme="@style/AppTheme.Users" />
         <activity android:name=".EventActivity" />
         <activity android:name=".addEvent" /> <!-- FOR TESTING -->
         <activity android:name=".checkpoint_list" />
