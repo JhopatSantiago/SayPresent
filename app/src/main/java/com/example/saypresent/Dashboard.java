@@ -1,11 +1,15 @@
 package com.example.saypresent;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +17,7 @@ import com.example.saypresent.controller.OrganizerController;
 import com.example.saypresent.database.Database;
 import com.example.saypresent.model.Organizer;
 import com.example.saypresent.utils.GetOrganizerInterface;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,19 +25,26 @@ import com.google.firebase.database.ValueEventListener;
 
 import android.view.View;
 import android.widget.Button;
+import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+
 
 /**
  * Dashboard Activity
  */
-public class Dashboard extends AppCompatActivity {
+public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private String organizer_key;
     private Organizer organizerAttribute;
     private OrganizerController organizerController = new OrganizerController();
     private TextView dashboard_name;
-    ImageView addEvent;
-    ImageView eventView;
+    private ImageView addEvent;
+    private ImageView eventView;
     private GetOrganizerInterface getOrganizerInterface;
     private Database database = new Database();
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
 
 
     @Override
@@ -40,8 +52,21 @@ public class Dashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+        toolbar = findViewById(R.id.toolbar);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
         dashboard_name = (TextView) findViewById(R.id.dashboardFN);
+        setSupportActionBar(toolbar);
 
+        //side menu navigation
+        navigationView.bringToFront();
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open,R.string.close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+        actionBarDrawerToggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.addEvent);
+        //
         Intent intent = getIntent();
         this.organizer_key = intent.getStringExtra("organizer_key");
 
@@ -65,6 +90,17 @@ public class Dashboard extends AppCompatActivity {
         });
         setName(this.organizer_key);
     }
+    //close the navigation menu
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START))
+        {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
 
     private void setName(final String organizer_key){
         organizerController.getOrganizer(organizer_key, new GetOrganizerInterface() {
@@ -76,6 +112,24 @@ public class Dashboard extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.addEvent:
+                Intent intent = new Intent (Dashboard.this,addEvent.class);
+                intent.putExtra("organizer_key", organizer_key);
+                startActivity(intent);
+                break;
+            case R.id.viewEvent:
+                Intent newintent = new Intent (Dashboard.this,EventActivity.class);
+                newintent.putExtra("organizer_key", organizer_key);
+                startActivity(newintent);
+                break;
+        }
+        return true;
     }
 }
 

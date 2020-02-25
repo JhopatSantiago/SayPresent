@@ -65,7 +65,6 @@ public class EventActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), EventDetailActivity.class);
                 intent.putExtra("organizer_key", organizer_key);
                 intent.putExtra("event_key", event_key);
-
                 startActivity(intent);
             }
         };

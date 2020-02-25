@@ -33,7 +33,7 @@
         <activity android:name=".addEvent" /> <!-- FOR TESTING -->
         <activity android:name=".checkpoint_list" />
         <activity android:name=".EventListActivity" /> <!-- FOR TESTING -->
-        <activity android:name=".Dashboard" />
+        <activity android:name=".Dashboard"/>
         <activity android:name=".SignUp" />
         <activity android:name=".LoginPage" />
         <activity android:name=".Login" />

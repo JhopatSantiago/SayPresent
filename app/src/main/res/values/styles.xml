@@ -29,9 +29,9 @@
 <!--        <item name="android:layout_height">1dp</item>-->
 <!--        <item name="android:background">?android:attr/listDivider</item>-->
 <!--    </style>-->
-    <style name="AppTheme.AppBarDashboard" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorSecondaryUser</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryUser</item>
+    <style name="AppTheme.AppBarDashboard" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorAccentUser</item>
+        <item name="colorPrimaryDark">@color/colorAccentUser</item>
         <item name="colorAccent">@color/colorAccentUser</item>
     </style>
 </resources>
