@@ -1,13 +1,20 @@
 package com.example.saypresent;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.drm.DrmStore;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.saypresent.adapter.EventsAdapter;
 import com.example.saypresent.controller.EventController;
@@ -16,13 +23,14 @@ import com.example.saypresent.model.Event;
 import com.example.saypresent.utils.CustomEventClickListener;
 import com.example.saypresent.utils.GetEventsInterface;
 import com.example.saypresent.utils.LongClickListener;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
 /**
  * Displays all events created by the organizer
  */
-public class EventActivity extends AppCompatActivity {
+public class EventActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -30,6 +38,10 @@ public class EventActivity extends AppCompatActivity {
     private GetEventsInterface getEventsInterface;
     private EventController eventController;
     private String organizer_key;
+    private DrawerLayout drawerLayoutEvents;
+    private Toolbar toolbarEvents;
+    private NavigationView navigationViewEvents;
+    private ActionBarDrawerToggle actionBarDrawerToggleEvent;
 
 
     @Override
@@ -37,6 +49,19 @@ public class EventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
+        drawerLayoutEvents = findViewById(R.id.drawerlayout_event);
+        toolbarEvents = findViewById(R.id.toolbar_event);
+        navigationViewEvents = findViewById(R.id.nav_view_events);
+
+        //
+        navigationViewEvents.bringToFront();
+        actionBarDrawerToggleEvent = new ActionBarDrawerToggle(this,drawerLayoutEvents,toolbarEvents,R.string.open,R.string.close);
+        drawerLayoutEvents.addDrawerListener(actionBarDrawerToggleEvent);
+        actionBarDrawerToggleEvent.setDrawerIndicatorEnabled(true);
+        actionBarDrawerToggleEvent.syncState();
+        navigationViewEvents.setNavigationItemSelectedListener(this);
+        navigationViewEvents.setCheckedItem(R.id.viewEvent);
+        //
         Intent intent = getIntent();
         organizer_key = intent.getStringExtra("organizer_key");
 
@@ -79,5 +104,18 @@ public class EventActivity extends AppCompatActivity {
 
         mAdapter = new EventsAdapter(events, clickListener, longClickListener,EventActivity.this);
         recyclerView.setAdapter(mAdapter);
+    }
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.addEvent:
+                Intent intent = new Intent (EventActivity.this,addEvent.class);
+                intent.putExtra("organizer_key", organizer_key);
+                startActivity(intent);
+                break;
+            case R.id.viewEvent:
+                break;
+        }
+        return true;
     }
 }
