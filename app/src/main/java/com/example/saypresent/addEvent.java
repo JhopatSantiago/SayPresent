@@ -1,5 +1,7 @@
 package com.example.saypresent;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,15 +10,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.saypresent.controller.EventController;
 import com.example.saypresent.model.Event;
 import com.example.saypresent.utils.CreateEventInterface;
 import com.example.saypresent.LoadingDialog;
+import com.google.android.material.navigation.NavigationView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,7 +31,7 @@ import java.util.Locale;
 /**
  * Creating Events
  */
-public class addEvent extends AppCompatActivity {
+public class addEvent extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private String organizer_key;
     private EditText event_name_field;
     private EditText event_location_field;
@@ -35,11 +41,32 @@ public class addEvent extends AppCompatActivity {
     private EventController eventController;
     private CreateEventInterface createEventInterface;
     private LoadingDialog loadingDialog = new LoadingDialog(addEvent.this);
+    private DrawerLayout drawerLayoutAddEvent;
+    private ActionBarDrawerToggle actionBarDrawerToggleAddEvent;
+    private Toolbar toolbarAddEvent;
+    private NavigationView navigationViewAddEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
+
+        //side menu navigation
+        toolbarAddEvent = findViewById(R.id.toolbarAddEvent);
+        drawerLayoutAddEvent = findViewById(R.id.drawer_layoutAddEvent);
+        navigationViewAddEvent = findViewById(R.id.nav_view_addEvent);
+        navigationViewAddEvent.bringToFront();
+        setSupportActionBar(toolbarAddEvent);
+        getSupportActionBar().setTitle(null);
+
+
+        actionBarDrawerToggleAddEvent = new ActionBarDrawerToggle(this,drawerLayoutAddEvent,toolbarAddEvent,R.string.open,R.string.close);
+        drawerLayoutAddEvent.addDrawerListener(actionBarDrawerToggleAddEvent);
+        actionBarDrawerToggleAddEvent.setDrawerIndicatorEnabled(true);
+        actionBarDrawerToggleAddEvent.syncState();
+        navigationViewAddEvent.setNavigationItemSelectedListener(this);
+        //
+
         final Calendar myCalendar = Calendar.getInstance();
         event_name_field = (EditText) findViewById(R.id.event_name);
         event_location_field = (EditText) findViewById(R.id.event_location);
@@ -109,6 +136,27 @@ public class addEvent extends AppCompatActivity {
         event_location_field.setText("");
         event_date_field.setText("");
         event_description_field.setText("");
+    }
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.dashboard:
+                Intent dashboardintent = new Intent (addEvent.this,Dashboard.class);
+                dashboardintent.putExtra("organizer_key", organizer_key);
+                startActivity(dashboardintent);
+                break;
+            case R.id.addEvent:
+                Intent intent = new Intent (addEvent.this,addEvent.class);
+                intent.putExtra("organizer_key", organizer_key);
+                startActivity(intent);
+                break;
+            case R.id.viewEvent:
+                Intent newintent = new Intent (addEvent.this,EventActivity.class);
+                newintent.putExtra("organizer_key", organizer_key);
+                startActivity(newintent);
+                break;
+        }
+        return true;
     }
 }
 

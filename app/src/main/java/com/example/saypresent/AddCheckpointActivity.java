@@ -127,14 +127,14 @@ public class AddCheckpointActivity extends AppCompatActivity implements Navigati
 //                break;
             case R.id.addEvent:
                 Intent intent = new Intent (AddCheckpointActivity.this,addEvent.class);
-//                intent.putExtra("organizer_key", organizer_key);
+                intent.putExtra("organizer_key", organizer_key);
                 startActivity(intent);
                 break;
-            case R.id.viewEvent:
-                Intent newintent = new Intent (AddCheckpointActivity.this,EventActivity.class);
+//            case R.id.viewEvent:
+//                Intent newintent = new Intent (AddCheckpointActivity.this,EventActivity.class);
 //                newintent.putExtra("organizer_key", organizer_key);
-                startActivity(newintent);
-                break;
+//                startActivity(newintent);
+//                break;
         }
         return true;
     }
