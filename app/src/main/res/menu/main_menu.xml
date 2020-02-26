@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 <group android:checkableBehavior="single">
-    <item android:id="@+id/addEvent" android:title="Add Event" android:icon="@drawable/ic_addevent"/>
-    <item android:id="@+id/viewEvent" android:title="View Event" android:icon="@drawable/ic_viewevent"/>
+    <item android:id="@+id/dashboard"
+        android:title="Dashboard"
+        android:icon="@drawable/sidebaricon_dashboard"/>
+    <item android:id="@+id/addEvent"
+        android:title="Add Event"
+        android:icon="@drawable/sidebaricon_addevent"/>
+    <item android:id="@+id/viewEvent"
+        android:title="View Event"
+        android:icon="@drawable/sidebaricon_viewevent"/>
 </group>
     <group android:checkableBehavior="single">
         <item android:id="@+id/Logout"
