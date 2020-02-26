@@ -57,6 +57,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         navigationView = findViewById(R.id.nav_view);
         dashboard_name = (TextView) findViewById(R.id.dashboardFN);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(null);
 
         //side menu navigation
         navigationView.bringToFront();
@@ -65,7 +66,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(R.id.addEvent);
+        navigationView.setCheckedItem(R.id.dashboard);
         //
         Intent intent = getIntent();
         this.organizer_key = intent.getStringExtra("organizer_key");
@@ -118,6 +119,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId())
         {
+            case R.id.dashboard:
+                break;
             case R.id.addEvent:
                 Intent intent = new Intent (Dashboard.this,addEvent.class);
                 intent.putExtra("organizer_key", organizer_key);

@@ -1,12 +1,16 @@
 package com.example.saypresent;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,6 +23,7 @@ import com.example.saypresent.model.EventCheckpoint;
 import com.example.saypresent.utils.CustomEventClickListener;
 import com.example.saypresent.utils.GetEventAttendeeInterface;
 import com.example.saypresent.utils.GetEventCheckpoint;
+import com.google.android.material.navigation.NavigationView;
 
 
 import java.util.List;
@@ -29,7 +34,7 @@ import java.util.List;
  * Scan QR code button to trigger QR Scanner for attendance
  *
  */
-public class CheckpointActivity extends AppCompatActivity {
+public class CheckpointActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private String organizer_key;
     private String event_key;
@@ -48,10 +53,27 @@ public class CheckpointActivity extends AppCompatActivity {
 
     private List<Attendee> attendees;
 
+    private NavigationView navigationViewCheckpoint;
+    private ActionBarDrawerToggle actionBarDrawerToggleCheckpoint;
+    private Toolbar toolbarCheckpoint;
+    private DrawerLayout drawerLayoutCheckpoint;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkpoint);
+
+        //side bar navigation
+        toolbarCheckpoint = findViewById(R.id.toolbarCheckpoint);
+        navigationViewCheckpoint = findViewById(R.id.nav_view_checkpoint);
+        drawerLayoutCheckpoint = findViewById(R.id.drawer_layout_checkpoint);
+        setSupportActionBar(toolbarCheckpoint);
+        getSupportActionBar().setTitle(null);
+        navigationViewCheckpoint.bringToFront();
+        actionBarDrawerToggleCheckpoint = new ActionBarDrawerToggle(this,drawerLayoutCheckpoint,toolbarCheckpoint,R.string.open,R.string.close);
+        actionBarDrawerToggleCheckpoint.setDrawerIndicatorEnabled(true);
+        actionBarDrawerToggleCheckpoint.syncState();
+        navigationViewCheckpoint.setNavigationItemSelectedListener(this);
 
         Intent intent = getIntent();
         event_key = intent.getStringExtra("event_key");
@@ -113,4 +135,25 @@ public class CheckpointActivity extends AppCompatActivity {
            }
        });
    }
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+//            case R.id.dashboard:
+//                Intent dashboardintent = new Intent (CheckpointActivity.this,Dashboard.class);
+//                dashboardintent.putExtra("organizer_key", organizer_key);
+//                startActivity(dashboardintent);
+//                break;
+            case R.id.addEvent:
+                Intent intent = new Intent (CheckpointActivity.this,addEvent.class);
+                intent.putExtra("organizer_key", organizer_key);
+                startActivity(intent);
+                break;
+            case R.id.viewEvent:
+                Intent newintent = new Intent (CheckpointActivity.this,EventActivity.class);
+                newintent.putExtra("organizer_key", organizer_key);
+                startActivity(newintent);
+                break;
+        }
+        return true;
+    }
 }

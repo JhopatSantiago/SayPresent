@@ -108,6 +108,11 @@ public class EventActivity extends AppCompatActivity implements NavigationView.O
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId())
         {
+            case R.id.dashboard:
+                Intent dashboardintent = new Intent (EventActivity.this,Dashboard.class);
+                dashboardintent.putExtra("organizer_key", organizer_key);
+                startActivity(dashboardintent);
+                break;
             case R.id.addEvent:
                 Intent intent = new Intent (EventActivity.this,addEvent.class);
                 intent.putExtra("organizer_key", organizer_key);
