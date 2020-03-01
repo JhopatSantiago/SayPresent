@@ -69,7 +69,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         navigationView.setCheckedItem(R.id.dashboard);
         //
         Intent intent = getIntent();
-        this.organizer_key = intent.getStringExtra("organizer_key");
+        organizer_key = intent.getStringExtra("organizer_key");
+        System.out.println(organizer_key);
 
         eventView = findViewById(R.id.viewEvent);
         eventView.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +104,14 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        this.organizer_key = intent.getStringExtra("organizer_key");
+        System.out.println("onResume " + organizer_key);
+    }
+
     private void setName(final String organizer_key){
         organizerController.getOrganizer(organizer_key, new GetOrganizerInterface() {
             @Override
@@ -124,11 +133,13 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             case R.id.addEvent:
                 Intent intent = new Intent (Dashboard.this,addEvent.class);
                 intent.putExtra("organizer_key", organizer_key);
+                drawerLayout.closeDrawers();
                 startActivity(intent);
                 break;
             case R.id.viewEvent:
                 Intent newintent = new Intent (Dashboard.this,EventActivity.class);
                 newintent.putExtra("organizer_key", organizer_key);
+                drawerLayout.closeDrawers();
                 startActivity(newintent);
                 break;
         }

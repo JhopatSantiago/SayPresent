@@ -141,18 +141,18 @@ public class addEvent extends AppCompatActivity implements NavigationView.OnNavi
         switch (item.getItemId())
         {
             case R.id.dashboard:
-                Intent dashboardintent = new Intent (addEvent.this,Dashboard.class);
-                dashboardintent.putExtra("organizer_key", organizer_key);
-                startActivity(dashboardintent);
+                Intent dashboardIntent = new Intent (addEvent.this,Dashboard.class);
+                dashboardIntent.putExtra("organizer_key", organizer_key);
+                System.out.println(organizer_key);
+                drawerLayoutAddEvent.closeDrawers();
+                startActivity(dashboardIntent);
                 break;
             case R.id.addEvent:
-                Intent intent = new Intent (addEvent.this,addEvent.class);
-                intent.putExtra("organizer_key", organizer_key);
-                startActivity(intent);
                 break;
             case R.id.viewEvent:
                 Intent newintent = new Intent (addEvent.this,EventActivity.class);
                 newintent.putExtra("organizer_key", organizer_key);
+                drawerLayoutAddEvent.closeDrawers();
                 startActivity(newintent);
                 break;
         }

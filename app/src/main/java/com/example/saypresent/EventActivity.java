@@ -112,11 +112,13 @@ public class EventActivity extends AppCompatActivity implements NavigationView.O
                 Intent dashboardintent = new Intent (EventActivity.this,Dashboard.class);
                 dashboardintent.putExtra("organizer_key", organizer_key);
                 startActivity(dashboardintent);
+                drawerLayoutEvents.closeDrawers();
                 break;
             case R.id.addEvent:
                 Intent intent = new Intent (EventActivity.this,addEvent.class);
                 intent.putExtra("organizer_key", organizer_key);
                 startActivity(intent);
+                drawerLayoutEvents.closeDrawers();
                 break;
             case R.id.viewEvent:
                 break;

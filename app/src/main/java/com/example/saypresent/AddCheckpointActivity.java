@@ -68,16 +68,17 @@ public class AddCheckpointActivity extends AppCompatActivity implements Navigati
         navigationViewAddCheck.setNavigationItemSelectedListener(this);
         //
 
-        Intent newintent = getIntent();
-        organizer_key = newintent.getStringExtra("organizer_key");
 
         Intent intent = getIntent();
 
+        organizer_key = intent.getStringExtra("organizer_key");
         event_key = intent.getStringExtra("event_key");
 
         checkpoint_name_field = (EditText) findViewById(R.id.checkpoint_name);
         checkpoint_location_field = (EditText) findViewById(R.id.checkpoint_location);
         save_btn = (Button) findViewById(R.id.save_checkpoint);
+        System.out.println("organizer_key" + organizer_key);
+
 
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,21 +121,21 @@ public class AddCheckpointActivity extends AppCompatActivity implements Navigati
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId())
         {
-//            case R.id.dashboard:
-//                Intent dashboardintent = new Intent (AddCheckpointActivity.this,Dashboard.class);
-//                dashboardintent.putExtra("organizer_key", organizer_key);
-//                startActivity(dashboardintent);
-//                break;
+            case R.id.dashboard:
+                Intent dashboardintent = new Intent (AddCheckpointActivity.this,Dashboard.class);
+                dashboardintent.putExtra("organizer_key", organizer_key);
+                startActivity(dashboardintent);
+                break;
             case R.id.addEvent:
                 Intent intent = new Intent (AddCheckpointActivity.this,addEvent.class);
                 intent.putExtra("organizer_key", organizer_key);
                 startActivity(intent);
                 break;
-//            case R.id.viewEvent:
-//                Intent newintent = new Intent (AddCheckpointActivity.this,EventActivity.class);
-//                newintent.putExtra("organizer_key", organizer_key);
-//                startActivity(newintent);
-//                break;
+            case R.id.viewEvent:
+                Intent newintent = new Intent (AddCheckpointActivity.this,EventActivity.class);
+                newintent.putExtra("organizer_key", organizer_key);
+                startActivity(newintent);
+                break;
         }
         return true;
     }

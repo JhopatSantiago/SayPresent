@@ -78,6 +78,7 @@ public class CheckpointActivity extends AppCompatActivity implements NavigationV
         Intent intent = getIntent();
         event_key = intent.getStringExtra("event_key");
         checkpoint_key = intent.getStringExtra("checkpoint_key");
+        organizer_key = intent.getStringExtra("organizer_key");
 
         checkpointNameField = (TextView) findViewById(R.id.checkpoint_name);
         checkpointLocationField = (TextView) findViewById(R.id.checkpoint_location);
@@ -138,19 +139,24 @@ public class CheckpointActivity extends AppCompatActivity implements NavigationV
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId())
         {
-//            case R.id.dashboard:
-//                Intent dashboardintent = new Intent (CheckpointActivity.this,Dashboard.class);
-//                dashboardintent.putExtra("organizer_key", organizer_key);
-//                startActivity(dashboardintent);
-//                break;
+            case R.id.dashboard:
+                Intent dashboardintent = new Intent (CheckpointActivity.this,Dashboard.class);
+                dashboardintent.putExtra("organizer_key", organizer_key);
+                System.out.println(organizer_key);
+                drawerLayoutCheckpoint.closeDrawers();
+                startActivity(dashboardintent);
+                break;
             case R.id.addEvent:
                 Intent intent = new Intent (CheckpointActivity.this,addEvent.class);
                 intent.putExtra("organizer_key", organizer_key);
+                drawerLayoutCheckpoint.closeDrawers();
                 startActivity(intent);
                 break;
             case R.id.viewEvent:
                 Intent newintent = new Intent (CheckpointActivity.this,EventActivity.class);
                 newintent.putExtra("organizer_key", organizer_key);
+                System.out.println(organizer_key);
+                drawerLayoutCheckpoint.closeDrawers();
                 startActivity(newintent);
                 break;
         }

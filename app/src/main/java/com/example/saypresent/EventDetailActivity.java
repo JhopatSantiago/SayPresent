@@ -100,6 +100,7 @@ public class EventDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                Intent addCheckpointIntent = new Intent(getApplicationContext(), AddCheckpointActivity.class);
                addCheckpointIntent.putExtra("event_key", event_key);
+               addCheckpointIntent.putExtra("organizer_key", organizer_key);
                startActivity(addCheckpointIntent);
             }
         });
@@ -155,6 +156,7 @@ public class EventDetailActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), CheckpointActivity.class);
                 intent.putExtra("checkpoint_key", checkpoint_key);
                 intent.putExtra("event_key", event_key);
+                intent.putExtra("organizer_key", organizer_key);
                 startActivity(intent);
             }
         };
