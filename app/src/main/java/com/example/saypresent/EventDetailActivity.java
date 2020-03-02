@@ -1,13 +1,17 @@
 package com.example.saypresent;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -26,6 +30,7 @@ import com.example.saypresent.utils.GetEventCheckpoints;
 import com.example.saypresent.utils.GetEventHandler;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
@@ -34,7 +39,7 @@ import java.util.List;
  * trigger for QR Scanner to ADD an ATTENDEE
  * trigger for Event's Registered ATTENDEES
  */
-public class EventDetailActivity extends AppCompatActivity {
+public class EventDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private String organizer_key;
     private String event_key;
@@ -58,11 +63,31 @@ public class EventDetailActivity extends AppCompatActivity {
     private FloatingActionMenu floatingActionMenu;
     private FloatingActionButton addCheckpoint,scanQR,addAttendee;
 
+    private DrawerLayout drawerLayoutEvent;
+    private ActionBarDrawerToggle actionBarDrawerToggleEvent;
+    private Toolbar toolbarEvent;
+    private NavigationView navigationViewEvent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
 
+        toolbarEvent = findViewById(R.id.toolbar_eventdetail);
+        drawerLayoutEvent = findViewById(R.id.drawer_layoutEventDetail);
+        navigationViewEvent = findViewById(R.id.nav_view_eventdetail);
+        setSupportActionBar(toolbarEvent);
+        getSupportActionBar().setTitle(null);
+
+        //side menu navigation
+        navigationViewEvent.bringToFront();
+        actionBarDrawerToggleEvent = new ActionBarDrawerToggle(this,drawerLayoutEvent,toolbarEvent,R.string.open,R.string.close);
+        drawerLayoutEvent.addDrawerListener(actionBarDrawerToggleEvent);
+        actionBarDrawerToggleEvent.setDrawerIndicatorEnabled(true);
+        actionBarDrawerToggleEvent.syncState();
+        navigationViewEvent.setNavigationItemSelectedListener(this);
+        navigationViewEvent.setCheckedItem(R.id.dashboard);
+        //
         final Intent intent = getIntent();
         organizer_key  = intent.getStringExtra("organizer_key");
         event_key = intent.getStringExtra("event_key");
@@ -163,5 +188,29 @@ public class EventDetailActivity extends AppCompatActivity {
 
         mAdapter = new CheckpointsAdapter(eventCheckpoints, customEventClickListener);
         recyclerView.setAdapter(mAdapter);
+    }
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.dashboard:
+                Intent dashboardintent = new Intent (EventDetailActivity.this,Dashboard.class);
+                dashboardintent.putExtra("organizer_key", organizer_key);
+                startActivity(dashboardintent);
+                drawerLayoutEvent.closeDrawers();
+                break;
+            case R.id.addEvent:
+                Intent intent = new Intent (EventDetailActivity.this,addEvent.class);
+                intent.putExtra("organizer_key", organizer_key);
+                startActivity(intent);
+                drawerLayoutEvent.closeDrawers();
+                break;
+            case R.id.viewEvent:
+                Intent ViewEventIntent = new Intent (EventDetailActivity.this,EventActivity.class);
+                ViewEventIntent.putExtra("organizer_key", organizer_key);
+                startActivity(ViewEventIntent);
+                drawerLayoutEvent.closeDrawers();
+                break;
+        }
+        return true;
     }
 }

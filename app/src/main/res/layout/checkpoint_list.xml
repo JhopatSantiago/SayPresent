@@ -1,51 +1,58 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dip">
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:padding="6dip"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true">
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:background="#f2f3f4">
 
     <TextView
         android:id="@+id/checkpoint_name"
         android:layout_width="284dp"
         android:layout_height="27dp"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_above="@id/checkpoint_location"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
         android:layout_marginLeft="65dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="50dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="1dp"
         android:fontFamily="@font/nexa_bold"
         android:gravity="center_vertical"
         android:text="Event Name"
-        android:textSize="20dp" />
+        android:textSize="24dp" />
 
     <TextView
         android:id="@+id/checkpoint_location"
         android:layout_width="304dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="80dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="83dp"
+        android:layout_marginRight="13dp"
         android:layout_marginBottom="3dp"
         android:text="Event location"
         android:textSize="12sp" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView3"
-        android:layout_width="59dp"
-        android:layout_height="58dp"
-        android:src="@drawable/ic_viewevent" />
+        android:layout_width="53dp"
+        android:layout_height="59dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_checkpoint"
+        app:civ_border_color="#008080"
+        app:civ_border_width="2dp" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         android:layout_marginLeft="65dp"
-        android:src="@drawable/ic_location" />
-
-
+        android:src="@drawable/ic_location"
+        />
 </RelativeLayout>
+</androidx.cardview.widget.CardView>

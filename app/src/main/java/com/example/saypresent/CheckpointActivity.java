@@ -65,7 +65,7 @@ public class CheckpointActivity extends AppCompatActivity implements NavigationV
 
         //side bar navigation
         toolbarCheckpoint = findViewById(R.id.toolbarCheckpoint);
-        navigationViewCheckpoint = findViewById(R.id.nav_view_checkpoint);
+        navigationViewCheckpoint = findViewById(R.id.nav_view_checkpointlist);
         drawerLayoutCheckpoint = findViewById(R.id.drawer_layout_checkpoint);
         setSupportActionBar(toolbarCheckpoint);
         getSupportActionBar().setTitle(null);

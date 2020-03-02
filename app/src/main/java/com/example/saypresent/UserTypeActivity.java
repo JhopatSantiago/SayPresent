@@ -5,27 +5,30 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 public class UserTypeActivity extends AppCompatActivity {
 
-    private Button organizer_btn;
-    private Button attendee_btn;
+    private ImageView organizer_btn;
+    private ImageView attendee_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_user_type);
-        ConstraintLayout constraintLayout = findViewById(R.id.Layout3);
+        RelativeLayout constraintLayout = findViewById(R.id.Layout3);
         AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
-        organizer_btn = (Button) findViewById(R.id.organizer_button);
-        attendee_btn = (Button) findViewById(R.id.attendee_button);
+        organizer_btn = (ImageView) findViewById(R.id.organizer_button);
+        attendee_btn = (ImageView) findViewById(R.id.attendee_button);
 
         organizer_btn.setOnClickListener(new View.OnClickListener() {
             @Override

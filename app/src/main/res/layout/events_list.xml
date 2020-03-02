@@ -1,33 +1,51 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="6dip"
-    android:background="#add8e6">
+    app:cardCornerRadius="3dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true">
 
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f2f3f4">
     <TextView
         android:id="@+id/event_name"
         android:layout_width="fill_parent"
         android:layout_height="26dip"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_above="@id/event_location"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:gravity="center_vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="65dp"
         android:text="Event Name"
         android:fontFamily="@font/nexa_bold"
-        android:textSize="20dp" />
+        android:textSize="24dp" />
 
     <TextView
         android:id="@+id/event_location"
         android:layout_width="fill_parent"
         android:layout_height="26dip"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="8dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="85dp"
         android:layout_marginBottom="3dp"
         android:text="Event location"
-        android:textSize="12sp" />
+        android:textSize="12sp"/>
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="53dp"
+        android:layout_height="59dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_viewevent" />
 
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="65dp"
+        android:src="@drawable/ic_location" />
 </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

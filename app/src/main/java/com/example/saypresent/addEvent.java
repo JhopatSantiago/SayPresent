@@ -65,6 +65,7 @@ public class addEvent extends AppCompatActivity implements NavigationView.OnNavi
         actionBarDrawerToggleAddEvent.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggleAddEvent.syncState();
         navigationViewAddEvent.setNavigationItemSelectedListener(this);
+        navigationViewAddEvent.setCheckedItem(R.id.addEvent);
         //
 
         final Calendar myCalendar = Calendar.getInstance();
