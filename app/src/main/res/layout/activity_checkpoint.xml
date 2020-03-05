@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="66dp"
             android:layout_marginTop="68dp"
-            android:fontFamily="@font/montserrat_regular"
+            android:fontFamily="@font/nexa_bold"
             android:text="CHECKPOINTS"
             android:textAlignment="center"
             android:textColor="#ffffff"
