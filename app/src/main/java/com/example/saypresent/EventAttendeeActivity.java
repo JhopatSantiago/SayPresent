@@ -1,12 +1,17 @@
 package com.example.saypresent;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.saypresent.adapter.AttendeeAdapter;
@@ -14,6 +19,7 @@ import com.example.saypresent.controller.AttendeeController;
 import com.example.saypresent.model.Attendee;
 import com.example.saypresent.utils.CustomEventClickListener;
 import com.example.saypresent.utils.GetEventAttendeeInterface;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
@@ -21,7 +27,7 @@ import java.util.List;
  * Displays all attendees of an Event
  * Event => Attendee
  */
-public class EventAttendeeActivity extends AppCompatActivity {
+public class EventAttendeeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private String event_key;
     private AttendeeController attendeeController = new AttendeeController();
@@ -30,10 +36,30 @@ public class EventAttendeeActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private DrawerLayout drawerLayoutViewAttendee;
+    private ActionBarDrawerToggle actionBarDrawerToggleViewAttendee;
+    private Toolbar toolbarViewAttendee;
+    private NavigationView navigationViewAttendee;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_attendee);
+
+        toolbarViewAttendee = findViewById(R.id.toolbar_viewAttendee);
+        drawerLayoutViewAttendee = findViewById(R.id.drawerlayout_viewAttendee);
+        navigationViewAttendee = findViewById(R.id.nav_view_viewAttendee);
+        setSupportActionBar(toolbarViewAttendee);
+        getSupportActionBar().setTitle(null);
+
+        //side menu navigation
+        navigationViewAttendee.bringToFront();
+        actionBarDrawerToggleViewAttendee = new ActionBarDrawerToggle(this,drawerLayoutViewAttendee,toolbarViewAttendee,R.string.open,R.string.close);
+        drawerLayoutViewAttendee.addDrawerListener(actionBarDrawerToggleViewAttendee);
+        actionBarDrawerToggleViewAttendee.setDrawerIndicatorEnabled(true);
+        actionBarDrawerToggleViewAttendee.syncState();
+        navigationViewAttendee.setNavigationItemSelectedListener(this);
+        //
 
         Intent intent = getIntent();
         event_key = intent.getStringExtra("event_key");
@@ -63,5 +89,29 @@ public class EventAttendeeActivity extends AppCompatActivity {
         }
 
         recyclerView.setAdapter(mAdapter);
+    }
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.dashboard:
+                Intent dashboardintent = new Intent (EventAttendeeActivity.this,Dashboard.class);
+                dashboardintent.putExtra("organizer_key", organizer_key);
+                startActivity(dashboardintent);
+                drawerLayoutViewAttendee.closeDrawers();
+                break;
+            case R.id.addEvent:
+                Intent intent = new Intent (EventAttendeeActivity.this,addEvent.class);
+                intent.putExtra("organizer_key", organizer_key);
+                startActivity(intent);
+                drawerLayoutViewAttendee.closeDrawers();
+                break;
+            case R.id.viewEvent:
+                Intent ViewEventIntent = new Intent (EventAttendeeActivity.this,EventActivity.class);
+                ViewEventIntent.putExtra("organizer_key", organizer_key);
+                startActivity(ViewEventIntent);
+                drawerLayoutViewAttendee.closeDrawers();
+                break;
+        }
+        return true;
     }
 }
