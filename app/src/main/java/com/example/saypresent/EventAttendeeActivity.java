@@ -30,6 +30,7 @@ import java.util.List;
 public class EventAttendeeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private String event_key;
+    private String organizer_key;
     private AttendeeController attendeeController = new AttendeeController();
 
     private RecyclerView recyclerView;
@@ -62,6 +63,8 @@ public class EventAttendeeActivity extends AppCompatActivity implements Navigati
         //
 
         Intent intent = getIntent();
+
+        organizer_key = intent.getStringExtra("organizer_key");
         event_key = intent.getStringExtra("event_key");
 
         recyclerView = (RecyclerView) findViewById(R.id.eventAttendeeRecycler);
@@ -73,7 +76,9 @@ public class EventAttendeeActivity extends AppCompatActivity implements Navigati
         attendeeController.getEventAtteendees(event_key, new GetEventAttendeeInterface() {
             @Override
             public void onGetEventAttendees(List<Attendee> attendees) {
-                InstantiateAdapter(attendees);
+                if(attendees != null){
+                    InstantiateAdapter(attendees);
+                }
             }
         });
     }

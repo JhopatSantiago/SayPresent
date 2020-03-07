@@ -172,11 +172,14 @@ public class AttendeeController {
                 if (dataSnapshot.exists()){
                     List<String> attendees = new ArrayList<>();
                     for (DataSnapshot ds : dataSnapshot.getChildren()){
-                        String attendee_key = ds.getValue(String.class);
+                        final String attendee_key = ds.getValue(String.class);
                         getAttendee(attendee_key, new GetAttendeeInterface() {
                             @Override
                             public void onGetAttendee(Attendee attendee) {
-                                handleAttendees(attendee, getEventAttendeeInterface);
+                                if (attendee != null){
+                                    System.out.println(attendee.getFirst_name());
+                                    handleAttendees(attendee, getEventAttendeeInterface);
+                                }
                             }
                         });
                     }
@@ -197,7 +200,6 @@ public class AttendeeController {
     private void handleAttendees(Attendee attendee, GetEventAttendeeInterface getEventAttendeeInterface){
         attendees.add(attendee);
         if (attendeeComplete) {
-            System.out.println(attendees);
             getEventAttendeeInterface.onGetEventAttendees(attendees);
         }
     }

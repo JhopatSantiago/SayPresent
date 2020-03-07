@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.saypresent.adapter.AttendanceAdapter;
 import com.example.saypresent.adapter.AttendeeAdapter;
 import com.example.saypresent.controller.AttendanceController;
 import com.example.saypresent.controller.EventCheckpointController;
@@ -105,7 +106,7 @@ public class CheckpointActivity extends AppCompatActivity implements NavigationV
     }
 
     private void InstantiateAdapter(final List<Attendee> attendees){
-        mAdapter = new AttendeeAdapter(attendees, new CustomEventClickListener() {
+        mAdapter = new AttendanceAdapter(attendees, new CustomEventClickListener() {
             @Override
             public void onItemClick(View v, int i) {
                 Log.i("attendee key", attendees.get(i).getAttendee_key());

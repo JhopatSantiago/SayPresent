@@ -116,6 +116,7 @@ public class EventDetailActivity extends AppCompatActivity implements Navigation
             public void onClick(View view) {
                 Intent eventAttendeeIntent = new Intent(getApplicationContext(), EventAttendeeActivity.class);
                 eventAttendeeIntent.putExtra("event_key", event_key);
+                eventAttendeeIntent.putExtra("organizer_key", organizer_key);
                 startActivity(eventAttendeeIntent);
             }
         });

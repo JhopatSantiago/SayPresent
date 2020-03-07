@@ -1,6 +1,5 @@
 package com.example.saypresent.controller;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -90,6 +89,7 @@ public class AttendanceController {
     private boolean isAttendanceDone = false;
     private List<Attendee> attendees = new ArrayList<>();
 
+
     public void getAttendance(String checkpoint_key, final GetEventAttendeeInterface getEventAttendeeInterface){
         Query attendanceRef = database.attendanceRef.child(checkpoint_key);
         attendanceRef.addValueEventListener(new ValueEventListener() {
@@ -97,16 +97,19 @@ public class AttendanceController {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 //                List<Attendee> attendees = new ArrayList<>();
                 if (dataSnapshot.exists()){
-                    for (DataSnapshot attendanceRef : dataSnapshot.getChildren()){
+                    for (final DataSnapshot attendanceRef : dataSnapshot.getChildren()){
                         final Attendee attendeeDB = attendanceRef.getValue(Attendee.class);
                         attendeeController.getAttendee(attendeeDB.getAttendee_key(), new GetAttendeeInterface() {
                             @Override
                             public void onGetAttendee(Attendee attendee) {
-                                attendee.setTimestamp(attendeeDB.getTimestamp());
-                                ReturnAttendance(attendee, getEventAttendeeInterface);
+                                if (attendee != null){
+                                    attendee.setTimestamp(attendeeDB.getTimestamp());
+                                    ReturnAttendance(attendee, getEventAttendeeInterface);
+                                }
                             }
                         });
                     }
+
                     isAttendanceDone = true;
                 }
             }
