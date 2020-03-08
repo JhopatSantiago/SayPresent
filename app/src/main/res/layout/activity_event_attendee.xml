@@ -17,7 +17,7 @@
         app:menu="@menu/main_menu"
         android:layout_gravity="start"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background_events">
@@ -32,41 +32,36 @@
             android:theme="?attr/actionBarTheme"
             app:layout_constraintBottom_toTopOf="@+id/textView6"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="261dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="121dp"
-        android:layout_marginTop="67dp"
-        android:layout_marginEnd="121dp"
-        android:layout_marginBottom="136dp"
-        android:fontFamily="@font/nexa_bold"
-        android:text="ATTENDEES"
-        android:textAlignment="center"
-        android:textColor="#ffffff"
-        android:textSize="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/eventAttendeeRecycler"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/eventAttendeeRecycler"
-        android:layout_width="411dp"
-        android:layout_height="593dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="300dp"
-        android:layout_marginEnd="1dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="257dp"
+            android:layout_height="76dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="67dp"
+            android:layout_marginBottom="136dp"
+            android:fontFamily="@font/nexa_bold"
+            android:text="ATTENDEES"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="40dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/eventAttendeeRecycler"
+            android:layout_width="410dp"
+            android:layout_height="596dp"
+            android:layout_marginTop="260dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+    </RelativeLayout>
 </androidx.drawerlayout.widget.DrawerLayout>
