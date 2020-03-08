@@ -14,8 +14,8 @@ import android.widget.RelativeLayout;
 
 public class UserTypeActivity extends AppCompatActivity {
 
-    private ImageView organizer_btn;
-    private ImageView attendee_btn;
+    private Button organizer_btn;
+    private Button attendee_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +27,8 @@ public class UserTypeActivity extends AppCompatActivity {
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
-        organizer_btn = (ImageView) findViewById(R.id.organizer_button);
-        attendee_btn = (ImageView) findViewById(R.id.attendee_button);
+        organizer_btn = (Button) findViewById(R.id.organizer_button);
+        attendee_btn = (Button) findViewById(R.id.attendee_button);
 
         organizer_btn.setOnClickListener(new View.OnClickListener() {
             @Override
