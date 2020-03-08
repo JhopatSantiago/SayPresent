@@ -140,12 +140,14 @@ public class QRScannerActivity extends AppCompatActivity {
             attendeeController.getAttendee(data, new GetAttendeeInterface() {
                 @Override
                 public void onGetAttendee(Attendee attendee) {
-                    String name = attendee.getFirst_name() + " " + attendee.getLast_name();
-                    barcodeTxt.setText(name);
-                    if (action.equals("event")) {
-                        addAttendeeOnEvent(attendee);
-                    }else if (action.equals("checkpoint")){
-                        RecordAttendance(attendee);
+                    if(attendee != null){
+                        String name = attendee.getFirst_name() + " " + attendee.getLast_name();
+                        barcodeTxt.setText(name);
+                        if (action.equals("event")) {
+                            addAttendeeOnEvent(attendee);
+                        }else if (action.equals("checkpoint")){
+                            RecordAttendance(attendee);
+                        }
                     }
                 }
             });
@@ -170,28 +172,35 @@ public class QRScannerActivity extends AppCompatActivity {
     }
 
     private void alert(String title,final String message){
-        System.out.println("GG");
-        final AlertDialog.Builder alert = new AlertDialog.Builder(QRScannerActivity.this);
-        alert.setTitle(title);
-        alert.setMessage(message);
-        alert.setPositiveButton("ok", null);
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                alert.show();
-            }
-        }, 200);
+        try {
+            final AlertDialog.Builder alert = new AlertDialog.Builder(QRScannerActivity.this);
+            alert.setTitle(title);
+            alert.setMessage(message);
+            alert.setPositiveButton("ok", null);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    alert.show();
+                }
+            }, 200);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void RecordAttendance(Attendee attendee){
         attendanceController.recordAttendance(event_key, checkpoint_key, attendee.getAttendee_key(), new RecordAttendance() {
             @Override
             public void onRecord(boolean success, int status) {
-                if (success){
-                    alert("Success", "Successfully recorded attendance");
-                }else{
-                    alert("Failed", decodeStatus(status));
+                try {
+                    if (success){
+                        alert("Success", "Successfully recorded attendance");
+                    }else{
+                        alert("Failed", decodeStatus(status));
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }
         });

@@ -54,7 +54,7 @@ public class addEvent extends AppCompatActivity implements NavigationView.OnNavi
         //side menu navigation
         toolbarAddEvent = findViewById(R.id.toolbarAddEvent);
         drawerLayoutAddEvent = findViewById(R.id.drawer_layoutAddEvent);
-        navigationViewAddEvent = findViewById(R.id.nav_view_addEvent);
+//        navigationViewAddEvent = findViewById(R.id.nav_view_addEvent);
         navigationViewAddEvent.bringToFront();
         setSupportActionBar(toolbarAddEvent);
         getSupportActionBar().setTitle(null);

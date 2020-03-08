@@ -13,16 +13,21 @@ class LoadingDialog {
     }
 
     void startLoadingDialog(){
-        AlertDialog.Builder builder = new  AlertDialog.Builder(activity);
+        try {
 
-        LayoutInflater inflater = activity.getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.custom_dialog,null));
-        builder.setCancelable(true);
+            AlertDialog.Builder builder = new  AlertDialog.Builder(activity);
 
-        dialog = builder.create();
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
+            LayoutInflater inflater = activity.getLayoutInflater();
+            builder.setView(inflater.inflate(R.layout.custom_dialog,null));
+            builder.setCancelable(true);
+
+            dialog = builder.create();
+            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
     void  dismissDialog(){
         dialog.dismiss();

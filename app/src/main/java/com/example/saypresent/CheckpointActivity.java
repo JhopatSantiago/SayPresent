@@ -163,4 +163,10 @@ public class CheckpointActivity extends AppCompatActivity implements NavigationV
         }
         return true;
     }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        initialize();
+    }
 }

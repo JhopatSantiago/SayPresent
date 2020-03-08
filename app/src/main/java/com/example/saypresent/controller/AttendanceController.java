@@ -51,7 +51,7 @@ public class AttendanceController {
         final DatabaseReference attendanceRef = database.attendanceRef.child(checkpoint_key);
         Query eventAttendeeRef = database.event_attendeeRef.child(event_key).child(attendee_key);
 
-        final String attendance_key = attendanceRef.push().getKey();
+        final String attendance_key = attendee_key;
 
 
         final String date = formatter.format(new Date());
@@ -122,9 +122,11 @@ public class AttendanceController {
     }
 
     private void ReturnAttendance(Attendee attendee, GetEventAttendeeInterface getEventAttendeeInterface){
-        attendees.add(attendee);
-        if (isAttendanceDone){
-            getEventAttendeeInterface.onGetEventAttendees(attendees);
+        if (attendee!= null){
+            attendees.add(attendee);
+            if (isAttendanceDone){
+                getEventAttendeeInterface.onGetEventAttendees(attendees);
+            }
         }
     }
 
