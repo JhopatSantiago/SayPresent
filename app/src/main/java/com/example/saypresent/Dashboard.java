@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.saypresent.controller.OrganizerController;
@@ -37,8 +36,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     private Organizer organizerAttribute;
     private OrganizerController organizerController = new OrganizerController();
     private TextView dashboard_name;
-    private ImageView addEvent;
-    private ImageView eventView;
+    private Button addEvent;
+    private Button eventView;
     private GetOrganizerInterface getOrganizerInterface;
     private Database database = new Database();
     private DrawerLayout drawerLayout;
@@ -81,7 +80,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 startActivity(intent);
             }
         });
-        addEvent = (ImageView) findViewById(R.id.addEvent);
+        addEvent = (Button) findViewById(R.id.addEvent);
         addEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
