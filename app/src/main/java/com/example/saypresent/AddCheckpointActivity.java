@@ -106,6 +106,9 @@ public class AddCheckpointActivity extends AppCompatActivity implements Navigati
                    loadingDialog.dismissDialog();
                    clearFields();
                    Toast.makeText(getApplicationContext(), "Successfully Created an Event Checkpoint", Toast.LENGTH_SHORT).show();
+                   Intent toEvent = new Intent (AddCheckpointActivity.this,EventActivity.class);
+                   toEvent.putExtra("organizer_key", organizer_key);
+                   startActivity(toEvent);
                }else {
                    loadingDialog.dismissDialog();
                    Toast.makeText(getApplicationContext(), "Failure in creating an Event Checkpoint", Toast.LENGTH_SHORT).show();
