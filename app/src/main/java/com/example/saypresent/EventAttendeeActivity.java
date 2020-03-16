@@ -134,6 +134,12 @@ public class EventAttendeeActivity extends AppCompatActivity implements Navigati
                         })
                         .setNegativeButton("No", null)
                         .show();
+            case R.id.AboutUs:
+                Intent intentAbout = new Intent (EventAttendeeActivity.this,EventActivity.class);
+                intentAbout.putExtra("organizer_key", organizer_key);
+                drawerLayoutViewAttendee.closeDrawers();
+                startActivity(intentAbout);
+                break;
         }
         return true;
     }
