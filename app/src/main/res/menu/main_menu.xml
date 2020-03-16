@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<group android:checkableBehavior="single">
+<group android:checkableBehavior="single"
+    android:id="@+id/main">
     <item android:id="@+id/dashboard"
         android:title="Dashboard"
         android:icon="@drawable/sidebaricon_dashboard"/>
@@ -11,9 +12,16 @@
         android:title="View Event"
         android:icon="@drawable/sidebaricon_viewevent"/>
 </group>
-    <group android:checkableBehavior="single">
-        <item android:id="@+id/Logout"
-            android:title="Logout"
-            android:icon="@drawable/ic_logout"/>
+    <group android:checkableBehavior="single"
+        android:id="@+id/logout_separator">
+    <item android:id="@+id/Logout"
+        android:title="Logout"
+        android:icon="@drawable/ic_logout"/>
+</group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/aboutUs_separator">
+        <item android:id="@+id/AboutUs"
+            android:title="About Us"
+            android:icon="@drawable/ic_info"/>
     </group>
 </menu>
