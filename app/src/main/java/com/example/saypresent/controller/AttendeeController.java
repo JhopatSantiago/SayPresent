@@ -36,12 +36,10 @@ public class AttendeeController {
      * @param addAttendeeInterface
      */
     public void addAttendeeOnEvent(String organizer_key, final String event_key, final Attendee attendee, final AddAttendeeInterface addAttendeeInterface){
-//        DatabaseReference attendeeRef = database.organizerRef.child(organizer_key).child(EVENT_NODE).child(event_key).child(ATTENDEE_NODE);
         final DatabaseReference attendeeRef = database.event_attendeeRef;
         final String attendee_key = attendee.getAttendee_key();
         attendee.setEvent_key(event_key);
         attendee.setAttendee_key(attendee_key);
-//        Query checkAttendeeRef = database.event_attendeeRef.orderByChild("event_key").equalTo(event_key);
         Query checkAttendeeRef = database.event_attendeeRef.child(event_key).child(attendee_key);
         checkAttendeeRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -72,9 +70,9 @@ public class AttendeeController {
                 Log.e("database error", databaseError.getMessage());
             }
         });
-
-
     }
+
+//    public void addAttendeeOnEvent( String event_key, Attendee attendee, )
 
 
     /**

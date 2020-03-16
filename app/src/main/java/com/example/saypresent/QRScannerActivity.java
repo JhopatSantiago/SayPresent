@@ -190,7 +190,7 @@ public class QRScannerActivity extends AppCompatActivity {
     }
 
     private void RecordAttendance(Attendee attendee){
-        attendanceController.recordAttendance(event_key, checkpoint_key, attendee.getAttendee_key(), new RecordAttendance() {
+        attendanceController.recordAttendance(event_key, checkpoint_key, attendee, new RecordAttendance() {
             @Override
             public void onRecord(boolean success, int status) {
                 try {

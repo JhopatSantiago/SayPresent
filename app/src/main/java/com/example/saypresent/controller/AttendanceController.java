@@ -39,7 +39,6 @@ public class AttendanceController {
      * FUNCTION TO BE CALLED BY QR SCANNER
      * RECORDS ATTENDANCE with attendee key
      * @param checkpoint_key
-     * @param attendee_key
      *
      * Status:
      *  -1 => Attendee not found
@@ -47,16 +46,16 @@ public class AttendanceController {
      *  1  => success
      */
 
-    public void recordAttendance(final String event_key, final String checkpoint_key, final String attendee_key, final RecordAttendance recordAttendance){
+    public void recordAttendance(final String event_key, final String checkpoint_key, final Attendee attendee, final RecordAttendance recordAttendance){
         final DatabaseReference attendanceRef = database.attendanceRef.child(checkpoint_key);
-        Query eventAttendeeRef = database.event_attendeeRef.child(event_key).child(attendee_key);
+        Query eventAttendeeRef = database.event_attendeeRef.child(event_key).child(attendee.getAttendee_key());
 
-        final String attendance_key = attendee_key;
-
-
+        final String attendance_key = attendee.getAttendee_key();
         final String date = formatter.format(new Date());
 
-        final Attendance attendance = new Attendance(attendee_key, date);
+        String first_name = attendee.getFirst_name();
+        String last_name = attendee.getLast_name();
+        final Attendee attendance = new Attendee(first_name, last_name, date);
         eventAttendeeRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -95,20 +94,22 @@ public class AttendanceController {
         attendanceRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                List<Attendee> attendees = new ArrayList<>();
+                List<Attendee> attendees = new ArrayList<>();
                 if (dataSnapshot.exists()){
                     for (final DataSnapshot attendanceRef : dataSnapshot.getChildren()){
                         final Attendee attendeeDB = attendanceRef.getValue(Attendee.class);
-                        attendeeController.getAttendee(attendeeDB.getAttendee_key(), new GetAttendeeInterface() {
-                            @Override
-                            public void onGetAttendee(Attendee attendee) {
-                                if (attendee != null){
-                                    attendee.setTimestamp(attendeeDB.getTimestamp());
-                                    ReturnAttendance(attendee, getEventAttendeeInterface);
-                                }
-                            }
-                        });
+                        attendees.add(attendeeDB);
+//                        attendeeController.getAttendee(attendeeDB.getAttendee_key(), new GetAttendeeInterface() {
+//                            @Override
+//                            public void onGetAttendee(Attendee attendee) {
+//                                if (attendee != null){
+//                                    attendee.setTimestamp(attendeeDB.getTimestamp());
+//                                    ReturnAttendance(attendee, getEventAttendeeInterface);
+//                                }
+//                            }
+//                        });
                     }
+                    getEventAttendeeInterface.onGetEventAttendees(attendees);
 
                     isAttendanceDone = true;
                 }
