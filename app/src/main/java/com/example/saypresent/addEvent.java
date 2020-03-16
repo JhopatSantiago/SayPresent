@@ -173,12 +173,6 @@ public class addEvent extends AppCompatActivity implements NavigationView.OnNavi
                         })
                         .setNegativeButton("No", null)
                         .show();
-            case R.id.AboutUs:
-                Intent intentAbout = new Intent (addEvent.this,EventActivity.class);
-                intentAbout.putExtra("organizer_key", organizer_key);
-                drawerLayoutAddEvent.closeDrawers();
-                startActivity(intentAbout);
-                break;
         }
         return true;
     }

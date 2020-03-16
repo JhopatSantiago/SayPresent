@@ -179,12 +179,6 @@ public class CheckpointActivity extends AppCompatActivity implements NavigationV
                         })
                         .setNegativeButton("No", null)
                         .show();
-            case R.id.AboutUs:
-                Intent intentAbout = new Intent (CheckpointActivity.this,EventActivity.class);
-                intentAbout.putExtra("organizer_key", organizer_key);
-                drawerLayoutCheckpoint.closeDrawers();
-                startActivity(intentAbout);
-                break;
         }
         return true;
     }

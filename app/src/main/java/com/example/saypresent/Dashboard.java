@@ -159,12 +159,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                         })
                         .setNegativeButton("No", null)
                         .show();
-            case R.id.AboutUs:
-                Intent intentAbout = new Intent (Dashboard.this,EventActivity.class);
-                intentAbout.putExtra("organizer_key", organizer_key);
-                drawerLayout.closeDrawers();
-                startActivity(intentAbout);
-                break;
         }
         return true;
     }
