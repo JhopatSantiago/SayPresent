@@ -1,6 +1,7 @@
 package com.example.saypresent.model;
 
 public class Attendance {
+    private Attendee attendee;
     private String checkpoint_key;
     private String attendee_key;
     private String timestamp;
@@ -11,9 +12,17 @@ public class Attendance {
         this.timestamp = timestamp;
     }
 
+    public Attendance(Attendee attendee, String timestamp){
+        this.attendee = attendee;
+        this.timestamp = timestamp;
+    }
     public Attendance(String attendee_key, String timestamp){
         this.attendee_key = attendee_key;
         this.timestamp = timestamp;
+    }
+
+    public Attendance(){
+
     }
 
     public String getCheckpoint_key() {

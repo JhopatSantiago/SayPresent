@@ -31,6 +31,13 @@ public class Attendee {
         this.timestamp = timestamp;
     }
 
+    public Attendee(String attendee_key,String first_name, String last_name, String timestamp){
+        this.attendee_key =attendee_key;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.timestamp = timestamp;
+    }
+
     public Attendee(){
 
     }
