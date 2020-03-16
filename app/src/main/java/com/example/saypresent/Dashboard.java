@@ -2,10 +2,12 @@ package com.example.saypresent;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -140,6 +142,28 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 newintent.putExtra("organizer_key", organizer_key);
                 drawerLayout.closeDrawers();
                 startActivity(newintent);
+                break;
+            case R.id.Logout:
+                new AlertDialog.Builder(this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Going Away?")
+                        .setMessage("Are you sure you want to logout?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent (Dashboard.this,LoginPage.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                Dashboard.this.finish();
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+            case R.id.AboutUs:
+                Intent intentAbout = new Intent (Dashboard.this,EventActivity.class);
+                intentAbout.putExtra("organizer_key", organizer_key);
+                drawerLayout.closeDrawers();
+                startActivity(intentAbout);
                 break;
         }
         return true;

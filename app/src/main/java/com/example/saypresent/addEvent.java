@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,7 +55,7 @@ public class addEvent extends AppCompatActivity implements NavigationView.OnNavi
         //side menu navigation
         toolbarAddEvent = findViewById(R.id.toolbarAddEvent);
         drawerLayoutAddEvent = findViewById(R.id.drawer_layoutAddEvent);
-//        navigationViewAddEvent = findViewById(R.id.nav_view_addEvent);
+        navigationViewAddEvent = findViewById(R.id.nav_view_addEvent);
         navigationViewAddEvent.bringToFront();
         setSupportActionBar(toolbarAddEvent);
         getSupportActionBar().setTitle(null);
@@ -156,6 +157,22 @@ public class addEvent extends AppCompatActivity implements NavigationView.OnNavi
                 drawerLayoutAddEvent.closeDrawers();
                 startActivity(newintent);
                 break;
+            case R.id.Logout:
+                new AlertDialog.Builder(this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Going Away?")
+                        .setMessage("Are you sure you want to logout?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent (addEvent.this,LoginPage.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                addEvent.this.finish();
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
         }
         return true;
     }

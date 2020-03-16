@@ -46,11 +46,7 @@
             android:textAlignment="center"
             android:textColor="#ffffff"
             android:textSize="40dp"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.454"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            />
 
         <TextView
             android:id="@+id/checkpoint_location"

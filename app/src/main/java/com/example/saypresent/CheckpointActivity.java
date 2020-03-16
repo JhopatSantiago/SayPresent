@@ -2,11 +2,14 @@ package com.example.saypresent;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -160,6 +163,22 @@ public class CheckpointActivity extends AppCompatActivity implements NavigationV
                 drawerLayoutCheckpoint.closeDrawers();
                 startActivity(newintent);
                 break;
+            case R.id.Logout:
+                new AlertDialog.Builder(this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Going Away?")
+                        .setMessage("Are you sure you want to logout?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent (CheckpointActivity.this,LoginPage.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                CheckpointActivity.this.finish();
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
         }
         return true;
     }

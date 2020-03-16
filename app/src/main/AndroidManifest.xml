@@ -19,6 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".about_us"></activity>
         <activity android:name=".UserTypeActivity" />
         <activity android:name=".AddCheckpointActivity" />
         <activity android:name=".EventAttendeeActivity" />
@@ -33,7 +34,7 @@
         <activity android:name=".addEvent" /> <!-- FOR TESTING -->
         <activity android:name=".checkpoint_list" />
         <activity android:name=".EventListActivity" /> <!-- FOR TESTING -->
-        <activity android:name=".Dashboard"/>
+        <activity android:name=".Dashboard" />
         <activity android:name=".SignUp" />
         <activity android:name=".LoginPage" />
         <activity android:name=".Login" />
