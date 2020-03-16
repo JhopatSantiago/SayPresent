@@ -53,9 +53,10 @@ public class AttendanceController {
         final String attendance_key = attendee.getAttendee_key();
         final String date = formatter.format(new Date());
 
+        String attendee_key = attendee.getAttendee_key();
         String first_name = attendee.getFirst_name();
         String last_name = attendee.getLast_name();
-        final Attendee attendance = new Attendee(first_name, last_name, date);
+        final Attendee attendance = new Attendee(attendance_key,first_name, last_name, date);
         eventAttendeeRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
