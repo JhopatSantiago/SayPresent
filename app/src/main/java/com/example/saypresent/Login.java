@@ -1,5 +1,6 @@
 package com.example.saypresent;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -14,6 +15,10 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -31,6 +36,7 @@ public class Login extends AppCompatActivity {
     int mCurrentViewPosition;
     Button Login;
     Button Signup;
+    TextView LearnAboutUs;
     private VideoView mVideoView;
 
     @Override
@@ -39,7 +45,7 @@ public class Login extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
         initialize();
-        
+
     }
     @Override
     protected void onPause(){
@@ -116,7 +122,9 @@ public class Login extends AppCompatActivity {
                 Intent intent = new Intent (Login.this,UserTypeActivity.class);
                 startActivity(intent);
             }
+
         });
+
         //Video Looping
         mVideoView = (VideoView) findViewById(R.id.BackgroundLoop);
 
@@ -135,5 +143,20 @@ public class Login extends AppCompatActivity {
                 }
             }
         });
+        TextView textView = findViewById(R.id.LearnAbout);
+
+        String text = "Learn more about us";
+        SpannableString ss = new SpannableString(text);
+        ClickableSpan aboutUs = new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                Intent intentabout = new Intent (Login.this,about_us.class);
+                startActivity(intentabout);
+            }
+        };
+        ss.setSpan(aboutUs,0,19, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textView.setText(ss);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
-}
+    }
+

@@ -34,4 +34,11 @@
         <item name="colorPrimaryDark">@color/colorAccentUser</item>
         <item name="colorAccent">@color/colorAccentUser</item>
     </style>
+
+    //Theme for login
+    <style name="AppTheme.AppBarLogin" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorSecondaryLogin</item>
+        <item name="colorPrimaryDark">@color/colorSecondaryLogin</item>
+        <item name="colorAccent">@color/colorAccentUser</item>
+    </style>
 </resources>
