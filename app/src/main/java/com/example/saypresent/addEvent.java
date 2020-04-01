@@ -118,6 +118,9 @@ public class addEvent extends AppCompatActivity implements NavigationView.OnNavi
                     Log.i("success", "Successfully created application");
                     showMessage("Successfully created event!");
                     clearFields();
+                    Intent todashboard = new Intent (addEvent.this,Dashboard.class);
+                    todashboard.putExtra("organizer_key", organizer_key);
+                    startActivity(todashboard);
                 }else{
                     showMessage("Failure in creating event!");
                 }

@@ -13,22 +13,29 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
 public class about_us extends AppCompatActivity {
+    ImageView BackToLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
 
-       /* ConstraintLayout constraintLayout = findViewById(R.id.Layout4);
-        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(2000);
-        animationDrawable.setExitFadeDuration(4000);
-        animationDrawable.start();*/
+        BackToLogin = (ImageView) findViewById(R.id.back);
+        BackToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goBackToDashboard = new Intent (about_us.this,Login.class);
+                startActivity(goBackToDashboard);
+            }
+        });
     }
 }
+

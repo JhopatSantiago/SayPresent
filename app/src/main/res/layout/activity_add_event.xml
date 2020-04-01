@@ -34,12 +34,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_menuicon" />
+
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="410dp"
-        android:layout_height="591dp"
-        android:background="@drawable/background_dashboardmenu"
-        android:layout_marginTop="250dp">
+        android:layout_height="600dp"
+        android:layout_marginTop="295dp"
+        android:background="@drawable/background_dashboardmenu">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="324dp"
@@ -144,15 +145,15 @@
             android:layout_marginTop="400dp"
             android:layout_marginRight="48dp">
 
-<!--            <EditText-->
-<!--                android:id="@+id/checkpoint_name"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:ems="10"-->
-<!--                android:fontFamily="@font/nexa_light"-->
-<!--                android:hint="Checkpoint Name"-->
-<!--                android:inputType="textCapWords"-->
-<!--                android:textSize="18dp" />-->
+            <!--            <EditText-->
+            <!--                android:id="@+id/checkpoint_name"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:ems="10"-->
+            <!--                android:fontFamily="@font/nexa_light"-->
+            <!--                android:hint="Checkpoint Name"-->
+            <!--                android:inputType="textCapWords"-->
+            <!--                android:textSize="18dp" />-->
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -171,25 +172,25 @@
             android:text="SAVE"
             android:textColor="#ffffff" />
 
-<!--        <com.google.android.material.textfield.TextInputLayout-->
-<!--            android:layout_width="324dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentLeft="true"-->
-<!--            android:layout_alignParentRight="true"-->
-<!--            android:layout_marginLeft="40dp"-->
-<!--            android:layout_marginTop="455dp"-->
-<!--            android:layout_marginRight="48dp">-->
+        <!--        <com.google.android.material.textfield.TextInputLayout-->
+        <!--            android:layout_width="324dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_alignParentLeft="true"-->
+        <!--            android:layout_alignParentRight="true"-->
+        <!--            android:layout_marginLeft="40dp"-->
+        <!--            android:layout_marginTop="455dp"-->
+        <!--            android:layout_marginRight="48dp">-->
 
-<!--            <EditText-->
-<!--                android:id="@+id/checkpoint_location"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:ems="10"-->
-<!--                android:fontFamily="@font/nexa_light"-->
-<!--                android:hint="Checkpoint Location"-->
-<!--                android:inputType="textCapWords"-->
-<!--                android:textSize="18dp" />-->
-<!--        </com.google.android.material.textfield.TextInputLayout>-->
+        <!--            <EditText-->
+        <!--                android:id="@+id/checkpoint_location"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:ems="10"-->
+        <!--                android:fontFamily="@font/nexa_light"-->
+        <!--                android:hint="Checkpoint Location"-->
+        <!--                android:inputType="textCapWords"-->
+        <!--                android:textSize="18dp" />-->
+        <!--        </com.google.android.material.textfield.TextInputLayout>-->
 
 
     </RelativeLayout>
